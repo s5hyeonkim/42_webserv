@@ -1,11 +1,12 @@
 #ifndef SERVERCONFIG_HPP
 # define SERVERCONFIG_HPP
-# include "AConfig.hpp"
+# include <string>
+# include <map>
 
-class ServerConfig : public AConfig
+class ServerConfig
 {
     private: 
-        std::string server_name;
+        std::map <std::string, int> configs;
     public:
         ServerConfig(char *file);
         ~ServerConfig();

@@ -1,6 +1,7 @@
 #include "Exception.hpp"
 
-void    Exception::handleInvalidArgs() const
+void    Exception::handleInvalidFile()
 {
-    throw std::logic_error("invalid arguments.");
+    throw std::logic_error("invalid config file.");
 }
+

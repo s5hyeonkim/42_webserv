@@ -4,12 +4,6 @@ CC = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 #CPPFLAGS 
 SRCS = ./main.cpp \
-	   ./AConfig.cpp \
-	   ./AServer.cpp \
-	   ./Location.cpp \
-	   ./LocationConfig.cpp \
-	   ./MainServer.cpp \
-	   ./ServerConfig.cpp \
 	   ./exception/Exception.cpp \
 
 OBJS = $(SRCS:.cpp=.o)

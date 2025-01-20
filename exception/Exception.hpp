@@ -4,7 +4,8 @@
 
 class Exception 
 {
-    void    handleInvalidArgs() const;  
+    public:
+        static void handleInvalidFile();
 };
 
 #endif
