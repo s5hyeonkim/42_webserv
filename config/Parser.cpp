@@ -35,8 +35,7 @@ std::string findParentDirectory(std::string& file)
 	return ret;
 }
 
-bool	hasFolder(std::string file)
-{
+bool	hasFolder(std::string file) {
 	return file.find('/') != std::string::npos;
 }
 

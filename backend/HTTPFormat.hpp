@@ -24,6 +24,16 @@ typedef struct s_response_form {
 class HTTPFormat
 {
 	private:
+		// response
+		const std::string	m_http_version;
+		int			status_code;
+		std::string date;
+		std::string	content_type;
+		int			content_length;
+		std::string	cache_control;
+		std::string	connection;
+
+		// request
 		std::string	m_host;
 		std::string	m_user_agent;
 		std::string	content_type;

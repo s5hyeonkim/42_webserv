@@ -6,6 +6,7 @@
 #include <map>
 #include <queue>
 
+// 객체 생성 없이 싱글톤으로 작성하기;
 class Repository
 {
 	private:
