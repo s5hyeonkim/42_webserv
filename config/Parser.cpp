@@ -9,89 +9,73 @@ Parser::Parser(std::string file) {
 
 Parser::~Parser() { }
 
-// void	Parser::handleWildcard(std::string files, std::string route)
-std::string findParentDirectory(std::string& file)
-{
-	std::string	ret;
-	size_t		dir_pos, asterisk;
+// void	Parser::handleRequestForm(Format& obj)
+// {
+	
+// }
 
-	dir_pos = file.find('/');
-	asterisk = file.find('*');
-	while (dir_pos != std::string::npos)
-	{
-		//dir_pos가 없거나
-		if (file.find('/', dir_pos) < asterisk)
-			break ;
-		dir_pos = file.find('/', dir_pos);
-	}
-	if (dir_pos == std::string::npos)
-		ret = "./";
-	else
-	{
-		ret = file.substr(dir_pos);
-		file.erase(dir_pos);
-	}
-	std::cout << file << std::endl;
-	return ret;
-}
-
-bool	hasFolder(std::string file) {
-	return file.find('/') != std::string::npos;
-}
-
-std::deque<std::string>	Parser::handleWildcard(std::string file)
-{
-	struct dirent			*entry;
-	DIR						*dir;
-	std::deque<std::string>	ret;
-	std::string				parent_dir;
-	size_t					pos;
-	bool					is_dir;
-
-	pos = file.find('*');
-	if (pos == std::string::npos)
-	{
-		ret.push_back(file);
-		return ret;
-	}
-	parent_dir = findParentDirectory(file);
-	is_dir = hasFolder(file);
-	if (!(dir = opendir(file.substr(pos).c_str())))
-		Exception::handleInvalidFile(errno);
-	while ((entry = readdir(dir)))
-	{
-		// dir check
-		// if (!is_dir && checkWildCard(file, entry->d_name))
-		if (entry->d_name == file)
-			ret.push_back(parent_dir + file);
-		std::cout << entry->d_name << std::endl;
-	}
-	// if (files.find('/', pos + 1) != std::string::npos)
-	// if (files.find('*', pos + 1) != std::string::npos)
-	closedir(dir);
-	return ret;
-}
-
-// void	Parser::getFileAsFragments(std::string file)
-void	Parser::getFile(std::string file)
+std::string	Parser::fileToStr(std::string file)
 {
 	std::ifstream		file_in;
 	std::stringstream	ss;
 	struct stat			sb;
 
-	std::cout << "Parse file start" << file << std::endl;
 	if (stat(file.c_str(), &sb) == -1)
 		Exception::handleInvalidFile(errno);
-	file_in.open(file);
+	file_in.open(file.c_str());
 	if (!file_in)
 	{
 		std::cerr << "DEBUG: No file to parse " << file << std::endl;
 		Exception::handleInvalidFile();
 	}
 	ss << file_in.rdbuf();
-	getKeywords(ss);
+	file_in.close();
+	return ss.str();
+}
+
+// void	Parser::getFileAsFragments(std::string file)
+void	Parser::getFile(std::string file)
+{
+	std::deque<std::string>	frags;
+	std::string				line;
+
+	line = fileToStr(file);
+	std::cout << "Parse file start" << file << std::endl;
+	setFragments(frags, line);
 	// printFragments();
-	file_in.close();;
+	m_frags.insert(m_frags.begin(), frags.begin(), frags.end());
+}
+
+void	Parser::setFragments(std::deque<std::string> &frags, std::string &line) {
+	size_t					prev, end;
+
+	prev = 0;
+	end = 0;
+	// std::cout << line << std::endl;
+	// std::cout << "line print end" << std::endl;
+	while (end < line.size())
+		splitBySpaces(frags, line, prev, end);
+	if (prev != end)
+		frags.push_back(line.substr(prev, end));
+}
+
+size_t	Parser::splitBySpaces(std::deque<std::string> &frags, std::string &line, size_t &prev, size_t &end)
+{
+	if (line[end] == '#')
+	{
+		if (line.find('\n', prev) == std::string::npos)
+			end = line.size();
+		else
+			end = line.find('\n', prev);
+		prev = end + 1;
+	}
+	else if (line[end] == '\t' || line[end] == '\n' || line[end] == ' ')
+	{
+		if (prev != end)
+			frags.push_back(line.substr(prev, end - prev));
+		prev = end + 1;
+	}
+	return ++end;
 }
 
 void	Parser::getFiles(std::string &files)
@@ -114,42 +98,6 @@ void	Parser::getFiles(std::string &files)
 	}
 	for (it = frags.begin(); it != frags.end(); it++)
 		getFile(*it);
-}
-
-void	Parser::getKeywords(std::stringstream &ss) {
-	std::deque<std::string>	frags;
-	std::string				line;
-	size_t					prev, end;
-
-	prev = 0;
-	end = 0;
-	line = ss.str();
-	// std::cout << line << std::endl;
-	// std::cout << "line print end" << std::endl;
-	while (end < line.size())
-		splitBySpaces(frags, line, prev, end);
-	if (prev != end)
-		frags.push_back(line.substr(prev, end));
-	m_frags.insert(m_frags.begin(), frags.begin(), frags.end());
-}
-
-size_t	Parser::splitBySpaces(std::deque<std::string> &frags, std::string &line, size_t &prev, size_t &end)
-{
-	if (line[end] == '#')
-	{
-		if (line.find('\n', prev) == std::string::npos)
-			end = line.size();
-		else
-			end = line.find('\n', prev);
-		prev = end + 1;
-	}
-	else if (line[end] == '\t' || line[end] == '\n' || line[end] == ' ')
-	{
-		if (prev != end)
-			frags.push_back(line.substr(prev, end - prev));
-		prev = end + 1;
-	}
-	return ++end;
 }
 
 void	Parser::printFragments() const {
@@ -198,8 +146,7 @@ void	Parser::bringKeyAndValue(std::string &key, std::string &val, size_t pos) {
 	val = "";
 	for (size_t i = 1; i < pos; i++)
 		val += m_frags[i] + " ";
-	m_frags[pos].pop_back();
-	key = m_frags[0];
+	key = m_frags[0].substr(m_frags[0].size() - 1);
 	val += m_frags[pos];
 	m_frags.erase(m_frags.begin(), m_frags.begin() + pos + 1);
 }
@@ -230,7 +177,7 @@ void	Parser::handleTypeDirectives(AConfig &obj) {
 			std::cerr << "DEBUG: invalid simple2. " << std::endl;
 			Exception::handleInvalidFile();
 		}
-		m_frags[pos].pop_back();
+		m_frags[pos].erase(m_frags[pos].size() - 1);
 		for (size_t i = 1; i <= pos; i++)
 			obj.addVal(m_frags[i], m_frags[0]);
 		m_frags.erase(m_frags.begin(), m_frags.begin() + pos + 1);
@@ -287,7 +234,7 @@ size_t	Parser::findEndOfSimpleDirectives() {
 	size_t	pos;
 
 	for (pos = 0; pos < m_frags.size(); pos++) {
-		if (m_frags[pos].back() == ';')
+		if (m_frags[pos][m_frags[pos].size() - 1] == ';')
 			return pos;
 	}
 	return pos;
@@ -311,4 +258,67 @@ void	Parser::postCheckBlock() {
 	}
 	// std::cout << "scope: " << scope << " is blocked." << std::endl;
 	m_frags.pop_front();
+}
+
+std::string findParentDirectory(std::string& file)
+{
+	std::string	ret;
+	size_t		dir_pos, asterisk;
+
+	dir_pos = file.find('/');
+	asterisk = file.find('*');
+	while (dir_pos != std::string::npos)
+	{
+		//dir_pos가 없거나
+		if (file.find('/', dir_pos) < asterisk)
+			break ;
+		dir_pos = file.find('/', dir_pos);
+	}
+	if (dir_pos == std::string::npos)
+		ret = "./";
+	else
+	{
+		ret = file.substr(dir_pos);
+		file.erase(dir_pos);
+	}
+	std::cout << file << std::endl;
+	return ret;
+}
+
+bool	hasFolder(std::string file) {
+	return file.find('/') != std::string::npos;
+}
+
+// void	Parser::handleWildcard(std::string files, std::string route)
+std::deque<std::string>	Parser::handleWildcard(std::string file)
+{
+	struct dirent			*entry;
+	DIR						*dir;
+	std::deque<std::string>	ret;
+	std::string				parent_dir;
+	size_t					pos;
+	bool					is_dir;
+
+	pos = file.find('*');
+	if (pos == std::string::npos)
+	{
+		ret.push_back(file);
+		return ret;
+	}
+	parent_dir = findParentDirectory(file);
+	is_dir = hasFolder(file);
+	if (!(dir = opendir(file.substr(pos).c_str())))
+		Exception::handleInvalidFile(errno);
+	while ((entry = readdir(dir)))
+	{
+		// dir check
+		// if (!is_dir && checkWildCard(file, entry->d_name))
+		if (!is_dir && entry->d_name == file)
+			ret.push_back(parent_dir + file);
+		std::cout << entry->d_name << std::endl;
+	}
+	// if (files.find('/', pos + 1) != std::string::npos)
+	// if (files.find('*', pos + 1) != std::string::npos)
+	closedir(dir);
+	return ret;
 }

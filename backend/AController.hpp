@@ -10,8 +10,8 @@ class AController
         /* data */
     public:
         AController(/* args */);
-        ~AController();
-        void    handleRequestForm(std::string req);
+        virtual ~AController();
+        virtual void    handleRequestForm(std::string req);
 };
 
 AController::AController(/* args */) {}

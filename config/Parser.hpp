@@ -6,11 +6,12 @@
 # include <string>
 # include <vector>
 # include <dirent.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <unistd.h>
 #include "ServerConfig.hpp"
 #include "LocationConfig.hpp"
+# include "../backend/Format.hpp"
 # include "../exception/Exception.hpp"
 class AConfig;
 
@@ -20,8 +21,10 @@ class Parser {
 		void					bringKeyAndValue(std::string& key, std::string& val, size_t pos);
 		std::deque<std::string>	handleWildcard(std::string file);
 		void					getFile(std::string file);
+		std::string				fileToStr(std::string file);
 		void					getFiles(std::string& val);
-		void					getKeywords(std::stringstream& ss);
+		void					setFragments(std::deque<std::string> &frags, std::string &line);
+		size_t					splitByDelimeters(std::deque<std::string> &frags, std::string& line, size_t& prev, size_t& end);
 		size_t					splitBySpaces(std::deque<std::string> &frags, std::string& line, size_t& prev, size_t& end);
 		void					handleBlockDirectives(AConfig& obj);
 		void					handleTypeDirectives(AConfig& obj);
@@ -35,6 +38,7 @@ class Parser {
 		Parser(std::string file);
 		~Parser();
 		void					handleDirectives(AConfig& obj);
+		// void					handleRequestForm(Format& format);
 		void					printFragments() const;
 };
 

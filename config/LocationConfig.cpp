@@ -76,11 +76,11 @@ bool	LocationConfig::isValidConfigs() const {
 
 	// if (getConfigSize() != ?)
 		// return false;
-	it = getBeginIterator();
-	ite = getEndIterator();
-	for (; it != ite; it++)	{
-		if (!isValidKeyword(it->first))
-			return false;
-	}
+	// it = getBeginIterator();
+	// ite = getEndIterator();
+	// for (; it != ite; it++)	{
+	// 	if (!isValidKeyword(it->first))
+	// 		return false;
+	// }
 	return true;
 }

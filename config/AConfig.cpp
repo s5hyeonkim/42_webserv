@@ -16,15 +16,7 @@ AConfig&	AConfig::operator=(const AConfig& obj) {
 	if (this == &obj)
 		return *this;
 	m_scope = obj.getScope();
-	// std::cout << "before: " << std::endl;
-	// for (it = m_configs.begin(); it != m_configs.end(); it++)
-	// 	std::cout << it->first <<  " ";
-	// std::cout << std::endl;
 	m_configs = obj.getConfigs();
-	// std::cout << "after: " << std::endl;
-	// for (it = m_configs.begin(); it != m_configs.end(); it++)
-	// 	std::cout << it->first <<  " ";
-	// std::cout << std::endl;
 	return *this;
 }
 
@@ -63,13 +55,13 @@ void	AConfig::setApiPoint(std::string &end_point, std::string &priority) {
 	Exception::handleInvalidFile();
 }
 
-std::map<std::string, std::string>::const_iterator	AConfig::getBeginIterator() const {
-	return m_configs.cbegin();
-}
+// std::map<std::string, std::string>::const_iterator	AConfig::getBeginIterator() const {
+// 	return m_configs.cbegin();
+// }
 
-std::map<std::string, std::string>::const_iterator	AConfig::getEndIterator() const {
-	return m_configs.cend();
-}
+// std::map<std::string, std::string>::const_iterator	AConfig::getEndIterator() const {
+// 	return m_configs.cend();
+// }
 
 size_t	AConfig::getConfigSize() const {
 	return m_configs.size();

@@ -1,8 +1,9 @@
 #ifndef USERCONTROLLER_HPP
 # define USERCONTROLLER_HPP
 #include <string>
+#include "AController.hpp"
 
-class UserController
+class UserController : AController
 {
 	private:
 	    /* data */

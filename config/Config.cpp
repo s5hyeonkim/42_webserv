@@ -52,10 +52,10 @@ bool	Config::isValidConfigs() const
 {
 	std::map<std::string, std::string>::const_iterator	it, ite;
 
-	ite = getEndIterator();
-	for (it = getBeginIterator(); it != ite; it++)	{
-		if (!isValidKeyword(it->first))
-			return false;
-	}
+	// ite = getEndIterator();
+	// for (it = getBeginIterator(); it != ite; it++)	{
+	// 	if (!isValidKeyword(it->first))
+	// 		return false;
+	// }
 	return true;
 }

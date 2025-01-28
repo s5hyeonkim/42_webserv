@@ -1,6 +1,9 @@
-#ifndef HTTPFORMAT_HPP
-# define HTTPFORMAT_HPP
+#ifndef FORMAT_HPP
+# define FORMAT_HPP
 #include <string>
+#include <iostream>
+#include <sstream>
+#include "../exception/Exception.hpp"
 
 //https://for-earth88.tistory.com/30
 typedef struct s_http_request {
@@ -13,15 +16,11 @@ typedef struct s_request_form {
 	std::string	keep_alive, connection, cookie, pragma, cache_control; 
 }	t_reqform;
 
-typedef struct s_http_response {
-	std::string status_line, header, empty_line, body;
-}	t_resform;
-
 typedef struct s_response_form {
 	std::string status_line, header, empty_line, body;
 }	t_resform;
 
-class HTTPFormat
+class Format
 {
 	private:
 		// response
@@ -36,10 +35,10 @@ class HTTPFormat
 		// request
 		std::string	m_host;
 		std::string	m_user_agent;
-		std::string	content_type;
+		// std::string	content_type;
 	public:
-		HTTPFormat(/* args */);
-		~HTTPFormat();
+		Format(/* args */);
+		~Format();
 		std::string	makeRequestForm(std::string lines);
 		std::string	makeResponseForm(std::string lines);
 		std::string	makeReponseHeader(std::string body);

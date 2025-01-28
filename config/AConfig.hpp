@@ -31,8 +31,8 @@ class AConfig
 		t_scope												getScope() const;
 		void												setScope(t_scope scope);
 		virtual void										setApiPoint(std::string &end_point, std::string &priority);
-		std::map<std::string, std::string>::const_iterator  getBeginIterator() const;
-		std::map<std::string, std::string>::const_iterator  getEndIterator() const;
+		// std::map<std::string, std::string>::const_iterator  getBeginIterator() const;
+		// std::map<std::string, std::string>::const_iterator  getEndIterator() const;
 		size_t												getConfigSize() const;
 		void												setConfigs(std::map<std::string, std::string> obj);
 		void												addVal(std::string& key, std::string& val);
