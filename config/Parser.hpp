@@ -17,29 +17,32 @@ class AConfig;
 
 class Parser {
 	private:
-		std::deque<std::string>	m_frags;
-		void					bringKeyAndValue(std::string& key, std::string& val, size_t pos);
-		std::deque<std::string>	handleWildcard(std::string file);
-		void					getFile(std::string file);
-		std::string				fileToStr(std::string file);
-		void					getFiles(std::string& val);
-		void					setFragments(std::deque<std::string> &frags, std::string &line);
-		size_t					splitByDelimeters(std::deque<std::string> &frags, std::string& line, size_t& prev, size_t& end);
-		size_t					splitBySpaces(std::deque<std::string> &frags, std::string& line, size_t& prev, size_t& end);
-		void					handleBlockDirectives(AConfig& obj);
-		void					handleTypeDirectives(AConfig& obj);
-		void					handleSimpleDirectives(AConfig& obj);
-		size_t					findEndOfSimpleDirectives();
-		void					preCheckBlock(AConfig& obj);
-		void					postCheckBlock();
-		size_t					findValueDeque(const std::string& val) const;
+		std::deque<std::string>				m_frags;
+		void								bringKeyAndValue(std::string& key, std::string& val, size_t pos);
+		std::deque<std::string>				handleWildcard(std::string file);
+		void								getFile(std::string file);
+		std::string							fileToStr(std::string file);
+		void								getFiles(std::string& val);
+		bool								isLocationScope(AConfig &obj) const;
+		void								setFragments(std::deque<std::string> &frags, std::string &line);
+		size_t								splitByDelimeters(std::deque<std::string> &frags, std::string& line, size_t& prev, size_t& end);
+		size_t								splitBySpaces(std::deque<std::string> &frags, std::string& line, size_t& prev, size_t& end);
+		void								handleBlockDirectives(AConfig& obj);
+		void								handleTypeDirectives(AConfig& obj);
+		void								handleSimpleDirectives(AConfig& obj);
+		size_t								findEndOfSimpleDirectives();
+		void								preCheckBlock(AConfig& obj);
+		void								postCheckBlock();
+		size_t								findValueDeque(const std::string& val) const;
 
 	public:
 		Parser(std::string file);
 		~Parser();
-		void					handleDirectives(AConfig& obj);
-		// void					handleRequestForm(Format& format);
-		void					printFragments() const;
+		void								handleDirectives(AConfig& obj);
+		// void								handleRequestForm(Format& format);
+		void								printFragments() const;
+		std::map<std::string, std::string>	getMap();
+
 };
 
 #include "AConfig.hpp"

@@ -1,6 +1,7 @@
 #ifndef LOCATIONCONFIG_HPP
 # define LOCATIONCONFIG_HPP
 #include "AConfig.hpp"
+class	Parser;
 
 typedef enum e_priority{
 	e_exactly, // =
@@ -28,6 +29,8 @@ class LocationConfig : public AConfig
 		virtual void	printConfigs() const;
 		bool			isValidConfigs() const;
 		bool			isValidKeyword(std::string key) const;
+		virtual void	readDefaultSettings();
 };
 
+#include "Parser.hpp"
 #endif

@@ -1,12 +1,12 @@
 #include "ServerConfig.hpp"
 
 // server 에 필요한 키워드만 뽑는다.
-ServerConfig::ServerConfig(): AConfig(e_server), m_locations() { }
+// ServerConfig::ServerConfig(): AConfig(e_server), m_locations() { }
+ServerConfig::ServerConfig(): AConfig(), m_locations() { }
 
 ServerConfig::~ServerConfig() {}
 
-bool	ServerConfig::isValidKeyword(std::string key) const
-{
+bool	ServerConfig::isValidKeyword(std::string key) const {
 	if (key == "aa")
 		return true;
 	return false;
@@ -20,8 +20,8 @@ void	ServerConfig::clear() {
 ServerConfig&	ServerConfig::operator=(const ServerConfig &obj) {
 	if (this == &obj)
 		return *this;
-	setConfigs(obj.getConfigs());
-	setScope(obj.getScope());
+	updateConfig(obj.getConfigs());
+	// setScope(obj.getScope());
 	for (size_t i = 0; i < obj.m_locations.size(); i++)
 		setLocation(obj.m_locations[i]);
 	return *this;
@@ -83,4 +83,12 @@ void	ServerConfig::addNewLocation(std::string& api_point, std::string priority) 
 
 void	ServerConfig::addNewLocation(const LocationConfig& obj) {
 	m_locations.push_back(obj);
+}
+
+void	ServerConfig::readDefaultSettings() {
+	Parser								parser("./utils/conf.d/requirements/server.nginx_keys");
+	std::map<std::string, std::string>	ret;
+
+	ret = parser.getMap();
+	this->AConfig::updateDefault(ret);
 }

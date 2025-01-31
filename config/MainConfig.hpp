@@ -1,5 +1,5 @@
-#ifndef CONFIG_HPP
-# define CONFIG_HPP
+#ifndef MAINCONFIG_HPP
+# define MAINCONFIG_HPP
 # include <iostream>
 # include <deque>
 # include "Parser.hpp"
@@ -7,20 +7,21 @@
 # include "../exception/Exception.hpp"
 # define CONFIG_NUM 1
 
-class Config : public AConfig
+class MainConfig : public AConfig
 {
 	private:
 		ServerConfig	m_server;
 	public:
-		Config();
-		Config(std::string file);
-		Config& operator=(const Config& objs);
-		~Config();
+		MainConfig();
+		MainConfig(std::string file);
+		MainConfig& operator=(const MainConfig& objs);
+		~MainConfig();
 		virtual void	setConfig(const AConfig& obj);
 		bool			isValidConfigs() const;
 		bool			isValidKeyword(std::string key) const;
 		virtual void	printConfigs() const;
 		ServerConfig&	getServer() const;
+		virtual void	readDefaultSettings();
 };
 
 #endif

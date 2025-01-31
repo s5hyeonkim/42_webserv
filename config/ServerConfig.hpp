@@ -3,6 +3,7 @@
 # include <vector>
 # include "LocationConfig.hpp"
 
+class	Parser;
 class ServerConfig : public AConfig
 {
 	private:
@@ -13,15 +14,16 @@ class ServerConfig : public AConfig
 		~ServerConfig();
 		ServerConfig&	operator=(const ServerConfig& objs);
 		void			setLocation(const LocationConfig& obj);
-		virtual void	setConfig(const AConfig &obj);
+		virtual void	setConfig(const AConfig& obj);
 		virtual void	clear();
 		size_t	getSizeOfLocations() const;
 		bool	isValidConfigs() const;
 		bool	isValidKeyword(std::string key) const;
 		void	addNewLocation(const LocationConfig& obj);
 		void	addNewLocation(std::string& api_point, std::string priority);
+		virtual void	readDefaultSettings();
 		virtual void	printConfigs() const;
 };
 
-
+#include "Parser.hpp"
 #endif

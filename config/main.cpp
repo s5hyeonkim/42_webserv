@@ -1,13 +1,13 @@
 #include <iostream>
 #include <stdexcept>
-#include "Config.hpp"
+#include "Configs.hpp"
 
 int	main(int argc, char *argv[]) {
 	(void) argc;
 	(void) argv;
 
     try {
-    	Config	cf("../utils/conf.d/nginx.conf");
+    	Configs::getInstance("../utils/conf.d/nginx.conf");
       	std::cout << "it is webserv" << std::endl;
     }
     catch (std::exception& e) {

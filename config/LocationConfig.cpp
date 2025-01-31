@@ -1,7 +1,9 @@
 #include "LocationConfig.hpp"
-LocationConfig::LocationConfig(): AConfig(e_location), m_api_point(""), m_priority(e_prefix_match) {}
+// LocationConfig::LocationConfig(): AConfig(e_location), m_api_point(""), m_priority(e_prefix_match) {}
+LocationConfig::LocationConfig(): AConfig(), m_api_point(""), m_priority(e_prefix_match) {}
 
-LocationConfig::LocationConfig(std::string& api_point, std::string priority): AConfig(e_location), m_api_point(api_point), m_priority() {
+// LocationConfig::LocationConfig(std::string& api_point, std::string priority): AConfig(e_location), m_api_point(api_point), m_priority() {
+LocationConfig::LocationConfig(std::string& api_point, std::string priority): AConfig(), m_api_point(api_point), m_priority() {
 	setPriority(priority);
 }
 
@@ -13,8 +15,8 @@ LocationConfig	&LocationConfig::operator=(const LocationConfig &obj)
 		return *this;
 	m_api_point = obj.m_api_point;
 	m_priority = obj.m_priority;
-	this->AConfig::setScope(obj.getScope());
-	this->AConfig::setConfigs(obj.getConfigs());
+	// this->AConfig::setScope(obj.getScope());
+	this->AConfig::updateConfig(obj.getConfigs());
 	return *this;
 }
 
@@ -83,4 +85,12 @@ bool	LocationConfig::isValidConfigs() const {
 	// 		return false;
 	// }
 	return true;
+}
+
+void	LocationConfig::readDefaultSettings() {
+	Parser								parser("./utils/conf.d/requirements/location.nginx_keys");
+	std::map<std::string, std::string>	ret;
+
+	ret = parser.getMap();
+	this->AConfig::updateDefault(ret);
 }
