@@ -128,7 +128,7 @@ void	Parser::handleDirectives(AConfig &obj) {
 		{
 			handleBlockDirectives(server);
 			obj.setConfig(server);
-			server.clear();			
+			server.clear();
 		}
 		else if (m_frags.front() == "types")
 			handleTypeDirectives(obj);
@@ -158,28 +158,13 @@ void	Parser::preCheckBlock(AConfig& obj) {
 	m_frags.erase(m_frags.begin(), m_frags.begin() + pos + 1);
 }
 
-// void	Parser::preCheckBlock(AConfig& obj) {
-// 	size_t	pos;
-
-// 	pos = findValueDeque("{");
-// 	if ((obj.getScope() != e_location && pos != 1) || (obj.getScope() == e_location && !(pos == 2 || pos == 3)))
-// 	{
-// 		std::cerr << "DEBUG: invalid block1." << std::endl;
-// 		Exception::handleInvalidFile();
-// 	}
-// 	if (obj.getScope() == e_location)
-// 		obj.setApiPoint(m_frags[pos - 1], m_frags[pos - 2]);
-// 	std::cout << "block: " << m_frags[0] << " " << m_frags[pos] << "is removed" << std::endl;
-// 	m_frags.erase(m_frags.begin(), m_frags.begin() + pos + 1);
-// }
-
 void	Parser::handleTypeDirectives(AConfig &obj) {
 	size_t	pos;
 
 	preCheckBlock(obj);
 	while (!m_frags.empty() && m_frags.front() != "}")
 	{
-		if ((pos = findEndOfSimpleDirectives()) == m_frags.size())
+		if ((pos = findEndOfSimpleDirectives()) == (size_t)-1)
 		{
 			std::cerr << "DEBUG: invalid simple2. " << std::endl;
 			Exception::handleInvalidFile();
@@ -224,17 +209,12 @@ void	Parser::handleBlockDirectives(AConfig &obj) {
 void	Parser::bringKeyAndValue(std::string &key, std::string &val, size_t pos) {
 	val = "";
 	for (size_t i = 1; i <= pos; i++) {
-		// if (i == pos)
-		// {
-		// 	val += m_frags[i].substr(m_frags[i].size());			
-		// 	break ;
-		// }
-		// val += m_frags[i] + " ";
-		val += m_frags[i];
 		if (i != pos)
-			val += " ";
+			val += m_frags[i] + " ";
+		else
+			val += m_frags[pos].substr(0, m_frags[pos].size() - 1);
 	}
-	key = m_frags[0].substr(m_frags[0].size() - 1);
+	key = m_frags[0];
 	m_frags.erase(m_frags.begin(), m_frags.begin() + pos + 1);
 }
 
@@ -245,7 +225,7 @@ std::map<std::string, std::string>	Parser::getMap() {
 
 	while ((pos = findEndOfSimpleDirectives()) != (size_t)-1) {
 		bringKeyAndValue(key, val, pos);
-		ret[key] = pos;
+		ret[key] = val;
 	}
 	return ret;
 }
@@ -274,7 +254,7 @@ size_t	Parser::findEndOfSimpleDirectives() {
 		if (m_frags[pos][m_frags[pos].size() - 1] == ';')
 			return pos;
 	}
-	return pos;
+	return (size_t) -1;
 }
 
 size_t	Parser::findValueDeque(const std::string& val) const {
@@ -359,3 +339,18 @@ std::deque<std::string>	Parser::handleWildcard(std::string file)
 	closedir(dir);
 	return ret;
 }
+
+// void	Parser::preCheckBlock(AConfig& obj) {
+// 	size_t	pos;
+
+// 	pos = findValueDeque("{");
+// 	if ((obj.getScope() != e_location && pos != 1) || (obj.getScope() == e_location && !(pos == 2 || pos == 3)))
+// 	{
+// 		std::cerr << "DEBUG: invalid block1." << std::endl;
+// 		Exception::handleInvalidFile();
+// 	}
+// 	if (obj.getScope() == e_location)
+// 		obj.setApiPoint(m_frags[pos - 1], m_frags[pos - 2]);
+// 	std::cout << "block: " << m_frags[0] << " " << m_frags[pos] << "is removed" << std::endl;
+// 	m_frags.erase(m_frags.begin(), m_frags.begin() + pos + 1);
+// }

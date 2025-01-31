@@ -4,6 +4,7 @@
 # include "LocationConfig.hpp"
 
 class	Parser;
+class	MainConfig;
 class ServerConfig : public AConfig
 {
 	private:
@@ -17,13 +18,15 @@ class ServerConfig : public AConfig
 		virtual void	setConfig(const AConfig& obj);
 		virtual void	clear();
 		size_t	getSizeOfLocations() const;
-		bool	isValidConfigs() const;
-		bool	isValidKeyword(std::string key) const;
+		// virtual void	checkValidConfigs() const;
+		// bool	isValidKeyword(std::string key) const;
+		virtual void	inheritConfig(const AConfig& obj);
 		void	addNewLocation(const LocationConfig& obj);
 		void	addNewLocation(std::string& api_point, std::string priority);
-		virtual void	readDefaultSettings();
+		virtual void	updateDefaultSettings();
 		virtual void	printConfigs() const;
 };
 
 #include "Parser.hpp"
+#include "MainConfig.hpp"
 #endif

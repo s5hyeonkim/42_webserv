@@ -18,11 +18,16 @@ AConfig&	AConfig::operator=(const AConfig& obj) {
 		return *this;
 	// m_scope = obj.getScope();
 	m_configs = obj.getConfigs();
+	m_configs = obj.getDefaultConfigs();
 	return *this;
 }
 
 void	AConfig::clear() {
 	m_configs.clear();
+}
+
+std::map<std::string, std::string>	AConfig::getDefaultConfigs() const {
+	return m_default;
 }
 
 std::map<std::string, std::string>	AConfig::getConfigs() const {
@@ -34,9 +39,19 @@ void	AConfig::setConfig(const AConfig& obj) {
 
 // recent value update
 void	AConfig::updateConfig(std::map<std::string, std::string> obj) {
-	std::map<std::string, std::string>::iterator	it;
+	std::map<std::string, std::string>::const_iterator	it;
 
 	for (it = obj.begin(); it != obj.end(); it++)
+	{
+		if (m_default.find(it->first) != m_default.end())
+			m_configs[it->first] = it->second;
+	}
+}
+
+void	AConfig::updateConfig(const AConfig& obj) {
+	std::map<std::string, std::string>::const_iterator	it;
+
+	for (it = obj.getConfigs().begin(); it != obj.getConfigs().end(); it++)
 		m_configs[it->first] = it->second;
 }
 
@@ -59,6 +74,15 @@ size_t	AConfig::getConfigSize() const {
 }
 
 void	AConfig::addVal(std::string &key, std::string &val) {
+	if (m_default.find(key) == m_default.end())
+	{
+		std::cerr << "the key " << key << " is not valid in this context." << std::endl;
+		Exception::handleInvalidFile();
+	}
+	m_configs[key] = val;
+}
+
+void	AConfig::addType(std::string &key, std::string &val) {
 	m_configs[key] = val;
 }
 
@@ -68,9 +92,30 @@ void	AConfig::printConfigs() const {
 	std::cout << "<----------------DEBUG---------------->" << std::endl;
 	for (it = m_configs.begin(); it != m_configs.end(); it++)
 	{
+		// std::cout << "key: " << it->first << " val: " << it->second << std::endl;
+		std::cout << it->first << " " << it->second << ";" << std::endl;
+	}
+	std::cout << "<----------------DEFAULT---------------->" << std::endl;
+	for (it = m_default.begin(); it != m_default.end(); it++)
+	{
 		std::cout << "key: " << it->first << " val: " << it->second << std::endl;
 	}
 	std::cout << "<----------------PRINT END---------------->" << std::endl;
+}
+
+void	AConfig::checkValidConfigs() const {
+	std::map<std::string, std::string>::const_iterator	it, ite;
+
+	it = m_configs.cbegin();
+	ite = m_configs.cend();
+	for (; it != ite; it++)
+	{
+		if (m_default.find(it->first) == m_default.end())
+		{
+			std::cerr << "the key " << it->first << " is not valid in this context." << std::endl;
+			Exception::handleInvalidFile();
+		}
+	}
 }
 
 // std::map<std::string, std::string>::const_iterator	AConfig::getBeginIterator() const {

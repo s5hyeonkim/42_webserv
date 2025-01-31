@@ -26,10 +26,11 @@ class LocationConfig : public AConfig
 		void			setConfig(const AConfig& obj);
 		void			setPriority(std::string &priority);
 		virtual void	setApiPoint(std::string &end_point, std::string &priority);
+		virtual void	inheritConfig(const AConfig& obj);
 		virtual void	printConfigs() const;
-		bool			isValidConfigs() const;
-		bool			isValidKeyword(std::string key) const;
-		virtual void	readDefaultSettings();
+		// virtual void	checkValidConfigs() const;
+		// bool			isValidKeyword(std::string key) const;
+		virtual void	updateDefaultSettings();
 };
 
 #include "Parser.hpp"

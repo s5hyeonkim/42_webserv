@@ -17,11 +17,12 @@ class MainConfig : public AConfig
 		MainConfig& operator=(const MainConfig& objs);
 		~MainConfig();
 		virtual void	setConfig(const AConfig& obj);
-		bool			isValidConfigs() const;
-		bool			isValidKeyword(std::string key) const;
+		// bool			isValidConfigs() const;
+		// bool			isValidKeyword(std::string key) const;
+		virtual void	inheritConfig(const AConfig &obj);
 		virtual void	printConfigs() const;
 		ServerConfig&	getServer() const;
-		virtual void	readDefaultSettings();
+		virtual void	updateDefaultSettings();
 };
 
 #endif

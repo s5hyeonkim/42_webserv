@@ -5,8 +5,9 @@ MainConfig::MainConfig(std::string file): AConfig(), m_server()
 {
 	Parser	parser(file);
 
+	updateDefaultSettings();
 	parser.handleDirectives(*this);
-	printConfigs();
+	// printConfigs();
 }
 
 MainConfig::~MainConfig() {}
@@ -18,6 +19,7 @@ MainConfig&	MainConfig::operator=(const MainConfig& obj)
 	m_server = obj.m_server;
 	// AConfig::setScope(obj.getScope());
 	AConfig::updateConfig(obj.getConfigs());
+	AConfig::updateDefault(obj.getDefaultConfigs());
 	return *this;
 }
 
@@ -42,29 +44,32 @@ void	MainConfig::setConfig(const AConfig& obj) {
 }
 
 
-bool	MainConfig::isValidKeyword(std::string key) const
-{
-	if (key != "aa")
-		return true;
-	return false;
-}
+// bool	MainConfig::isValidKeyword(std::string key) const
+// {
+// 	if (key != "aa")
+// 		return true;
+// 	return false;
+// }
 
-bool	MainConfig::isValidConfigs() const
-{
-	std::map<std::string, std::string>::const_iterator	it, ite;
-
-	// ite = getEndIterator();
-	// for (it = getBeginIterator(); it != ite; it++)	{
-	// 	if (!isValidKeyword(it->first))
-	// 		return false;
-	// }
-	return true;
-}
-
-void	MainConfig::readDefaultSettings() {
-	Parser								parser("./utils/conf.d/requirements/http.nginx_keys");
+void	MainConfig::updateDefaultSettings() {
+	Parser								parser("../utils/conf.d/requirements/http.nginx_keys");
 	std::map<std::string, std::string>	ret;
 
 	ret = parser.getMap();
 	this->AConfig::updateDefault(ret);
+	std::cout << "update Main Default Setting complete" << std::endl;
+}
+
+void	MainConfig::inheritConfig(const AConfig& obj) {
+	MainConfig			*is_http;
+	ServerConfig	*is_server;
+	
+	is_http = dynamic_cast<MainConfig*>(&(const_cast<AConfig&>(obj)));
+	is_server = dynamic_cast<ServerConfig*>(&(const_cast<AConfig&>(obj)));
+	if (is_http)
+		updateConfig(obj.getConfigs());
+	else if (is_server)
+		is_server->inheritConfig(*this);
+	// else
+		// Exception::handleInvalidFile();
 }
