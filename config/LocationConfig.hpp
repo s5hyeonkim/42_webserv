@@ -1,7 +1,8 @@
 #ifndef LOCATIONCONFIG_HPP
 # define LOCATIONCONFIG_HPP
 #include "AConfig.hpp"
-class	Parser;
+# include "FileParser.hpp"
+# define location_conf "../utils/conf.d/requirements/location.nginx_keys"
 
 typedef enum e_priority{
 	e_exactly, // =
@@ -11,11 +12,15 @@ typedef enum e_priority{
 	e_prefix_match // ""
 }	t_priority;
 
+class ServerConfig;
+
 class LocationConfig : public AConfig
 {
 	private:
 		std::string m_api_point;
 		t_priority	m_priority;
+		static AConfig	*mp_default;
+		LocationConfig(std::string file);
 
 	public:
 		LocationConfig();
@@ -23,15 +28,18 @@ class LocationConfig : public AConfig
 		LocationConfig&	operator=(const LocationConfig& obj);
 		bool			operator==(const LocationConfig& obj);
 		~LocationConfig();
-		void			setConfig(const AConfig& obj);
+		t_priority		getPriority() const;
 		void			setPriority(std::string &priority);
+		void			setConfig(const AConfig& obj);
+		std::string		getEndPoint() const;
+		virtual void			checkValidConfigs();
 		virtual void	setApiPoint(std::string &end_point, std::string &priority);
 		virtual void	inheritConfig(const AConfig& obj);
 		virtual void	printConfigs() const;
-		// virtual void	checkValidConfigs() const;
-		// bool			isValidKeyword(std::string key) const;
-		virtual void	updateDefaultSettings();
+		static void				deleteConfig();
+		// virtual void	updateDefaultSettings();
+		virtual AConfig	*getInstance();
 };
+# include "ServerConfig.hpp"
 
-#include "Parser.hpp"
 #endif

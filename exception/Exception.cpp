@@ -1,26 +1,25 @@
 #include "Exception.hpp"
-#include <cerrno>
-#include <string.h>
 
-void    Exception::handleInvalidFile()
+void	Exception::handleInvalidFile()
 {
-    throw std::logic_error("invalid config file.");
+	throw std::logic_error("invalid config file.");
 }
 
-void    Exception::handleInvalidFile(int _errno)
+void	Exception::handleInvalidFile(int _errno)
 {
-    std::string lines;
+	std::string lines;
 
-    lines = "invalid config file.\n";
-    throw std::logic_error(lines + strerror(_errno));
+	lines = "invalid config file.\n";
+	throw std::logic_error(lines + strerror(_errno));
 }
 
-void    Exception::handleInvalidRequest()
+//DEBUG
+void	Exception::handleInvalidAccess()
 {
-    throw std::logic_error("invalid request.");
+	throw std::logic_error("it does not have context. check your context name again.");
 }
 
-void    Exception::handleInvalidResponse()
+void Exception::handleSystemError(int _errno)
 {
-    throw std::logic_error("invalid response.");
+	throw std::runtime_error(strerror(_errno));
 }

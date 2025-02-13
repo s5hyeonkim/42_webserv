@@ -5,13 +5,14 @@
 # include <sstream>
 # include <string>
 # include <vector>
+# include <map>
 # include <dirent.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <unistd.h>
-#include "ServerConfig.hpp"
-#include "LocationConfig.hpp"
-# include "../backend/Format.hpp"
+# include "ServerConfig.hpp"
+# include "LocationConfig.hpp"
+// # include "../backend/Format.hpp"
 # include "../exception/Exception.hpp"
 class AConfig;
 
@@ -23,6 +24,7 @@ class Parser {
 		void								getFile(std::string file);
 		std::string							fileToStr(std::string file);
 		void								getFiles(std::string& val);
+		void								getFiles(std::deque<std::string> &frag);
 		bool								isLocationScope(AConfig &obj) const;
 		void								setFragments(std::deque<std::string> &frags, std::string &line);
 		size_t								splitByDelimeters(std::deque<std::string> &frags, std::string& line, size_t& prev, size_t& end);
@@ -30,7 +32,7 @@ class Parser {
 		void								handleBlockDirectives(AConfig& obj);
 		void								handleTypeDirectives(AConfig& obj);
 		void								handleSimpleDirectives(AConfig& obj);
-		size_t								findEndOfSimpleDirectives();
+		size_t								findEndCharsetFromStrs(char end);
 		void								preCheckBlock(AConfig& obj);
 		void								postCheckBlock();
 		size_t								findValueDeque(const std::string& val) const;

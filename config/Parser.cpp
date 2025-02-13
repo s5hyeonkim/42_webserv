@@ -3,7 +3,6 @@
 Parser::Parser(std::string file) {
 	if (file == "")
 		file = "utils/conf.d/default.conf";
-	// file 경로 검사 해야함. 상대경로로 멕일 수 있다.
 	getFile(file);
 }
 
@@ -16,7 +15,10 @@ std::string	Parser::fileToStr(std::string file)
 	struct stat			sb;
 
 	if (stat(file.c_str(), &sb) == -1)
+	{
+		std::cerr << "no File " << file << std::endl;
 		Exception::handleInvalidFile(errno);
+	}
 	file_in.open(file.c_str());
 	if (!file_in)
 	{
@@ -73,6 +75,24 @@ size_t	Parser::splitBySpaces(std::deque<std::string> &frags, std::string &line, 
 	return ++end;
 }
 
+void	Parser::getFiles(std::deque<std::string> &frag)
+{
+	std::deque<std::string>::iterator	it;
+	std::deque<std::string>				ret;
+	size_t								size;
+
+	size = frag.size();
+	while (size--)
+	{
+		ret = handleWildcard(frag.front());
+		frag.pop_front();
+		frag.insert(frag.end(), ret.begin(), ret.end());
+		ret.clear();
+	}
+	for (it = frag.begin(); it != frag.end(); it++)
+		getFile(*it);
+}
+
 void	Parser::getFiles(std::string &files)
 {
 	std::deque<std::string>::iterator	it;
@@ -106,20 +126,11 @@ void	Parser::printFragments() const {
 	std::cout << "<----------------PRINT END---------------->" << std::endl;
 }
 
-// void	Parser::handleTypeDirectives(Config &obj, t_scope scope) {
-// 	preCheckBlock(scope);
-// 	while (!m_frags.empty() && m_frags.front() != "}")
-// 		handleSimpleDirectives(obj, scope);
-// 	postCheckBlock();
-// }
-
 void	Parser::handleDirectives(AConfig &obj) {
 	ServerConfig	server;
 
 	while (!m_frags.empty())
 	{
-		// std::cout << "Frag: " << m_frags.front() << std::endl;
-		// if (m_frags.front() == "http" && obj.isServer())
 		if (m_frags.front() == "http")
 			handleBlockDirectives(obj);
 		else if (m_frags.front() == "events")
@@ -154,22 +165,25 @@ void	Parser::preCheckBlock(AConfig& obj) {
 	}
 	if (isLocationScope(obj))
 		obj.setApiPoint(m_frags[pos - 1], m_frags[pos - 2]);
-	std::cout << "block: " << m_frags[0] << " " << m_frags[pos] << "is removed" << std::endl;
+	// std::cout << "block: " << m_frags[0] << " " << m_frags[pos] << "is removed" << std::endl;
 	m_frags.erase(m_frags.begin(), m_frags.begin() + pos + 1);
 }
 
 void	Parser::handleTypeDirectives(AConfig &obj) {
+	std::deque<std::string>	deq;
 	size_t	pos;
 
 	preCheckBlock(obj);
 	while (!m_frags.empty() && m_frags.front() != "}")
 	{
-		if ((pos = findEndOfSimpleDirectives()) == (size_t)-1)
+		if ((pos = findEndCharsetFromStrs(';')) == (size_t)-1)
 		{
 			std::cerr << "DEBUG: invalid simple2. " << std::endl;
 			Exception::handleInvalidFile();
 		}
 		m_frags[pos].erase(m_frags[pos].size() - 1);
+		// deq.insert(deq.end(), m_frags.begin(), m_frags.begin() + pos + 1);
+		// obj.addVal(deq);
 		for (size_t i = 1; i <= pos; i++)
 			obj.addVal(m_frags[i], m_frags[0]);
 		m_frags.erase(m_frags.begin(), m_frags.begin() + pos + 1);
@@ -181,7 +195,7 @@ void	Parser::handleBlockDirectives(AConfig &obj) {
 	ServerConfig	server;
 	LocationConfig	location;
 
-	std::cout << "block: " << m_frags[0] << std::endl;
+	// std::cout << "block: " << m_frags[0] << std::endl;
 	preCheckBlock(obj);
 	while (!m_frags.empty() && m_frags.front() != "}")
 	{
@@ -209,10 +223,10 @@ void	Parser::handleBlockDirectives(AConfig &obj) {
 void	Parser::bringKeyAndValue(std::string &key, std::string &val, size_t pos) {
 	val = "";
 	for (size_t i = 1; i <= pos; i++) {
-		if (i != pos)
+		// if (i != pos)
 			val += m_frags[i] + " ";
-		else
-			val += m_frags[pos].substr(0, m_frags[pos].size() - 1);
+		// else
+			// val += m_frags[pos].substr(0, m_frags[pos].size() - 1);
 	}
 	key = m_frags[0];
 	m_frags.erase(m_frags.begin(), m_frags.begin() + pos + 1);
@@ -223,7 +237,7 @@ std::map<std::string, std::string>	Parser::getMap() {
 	std::string							key, val;
 	size_t								pos;
 
-	while ((pos = findEndOfSimpleDirectives()) != (size_t)-1) {
+	while ((pos = findEndCharsetFromStrs(';')) != (size_t)-1) {
 		bringKeyAndValue(key, val, pos);
 		ret[key] = val;
 	}
@@ -232,26 +246,34 @@ std::map<std::string, std::string>	Parser::getMap() {
 
 void	Parser::handleSimpleDirectives(AConfig &obj) {
 	std::string	key, val;
+	std::deque<std::string>	frag;
 	size_t	pos;
 
-	if ((pos = findEndOfSimpleDirectives()) == (size_t)-1)
+	if ((pos = findEndCharsetFromStrs(';')) == (size_t)-1)
 	{
 		std::cerr << "DEBUG: invalid simple2. " << std::endl;
 		Exception::handleInvalidFile();
 	}
+	m_frags[pos].erase(m_frags[pos].size() - 1);
+	frag.insert(frag.end(), m_frags.begin(), m_frags.begin() + pos + 1);
+	m_frags.erase(m_frags.begin(), m_frags.begin() + pos + 1);
 	// std::cout << "simple: " << m_frags[0] << std::endl;
-	bringKeyAndValue(key, val, pos);
-	if (key == "include")
-		getFile(val);
+	// bringKeyAndValue(key, val, pos);
+	if (frag[0] == "include")
+	{
+		frag.pop_front();
+		getFiles(frag);
+	}
 	else
-		obj.addVal(key, val);
+		obj.addVal(frag);
+		// obj.addVal(key, val);
 }
 
-size_t	Parser::findEndOfSimpleDirectives() {
+size_t	Parser::findEndCharsetFromStrs(char end) {
 	size_t	pos;
 
 	for (pos = 0; pos < m_frags.size(); pos++) {
-		if (m_frags[pos][m_frags[pos].size() - 1] == ';')
+		if (m_frags[pos][m_frags[pos].size() - 1] == end)
 			return pos;
 	}
 	return (size_t) -1;

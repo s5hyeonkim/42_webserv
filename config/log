@@ -1,0 +1,6 @@
+Parse file start../utils/conf.d/nginx.conf
+Parse file start../utils/conf.d/requirements/http.nginx_keys
+Parse file start../utils/conf.d/requirements/server.nginx_keys
+Parse file start../utils/conf.d/requirements/server.nginx_keys
+Parse file start../utils/conf.d/requirements/location.nginx_keys
+update Location Default Setting complete
