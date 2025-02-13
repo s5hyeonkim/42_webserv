@@ -1,12 +1,18 @@
 NAME = webserv
 
 CC = c++
-# CXXFLAGS = -Wall -Wextra -Werror -std=c++98
-CXXFLAGS = -std=c++98
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+# CXXFLAGS = -std=c++98
 #CPPFLAGS 
 SRCS = ./server/main.cpp \
 		./server/Server.cpp \
+		./server/ServerProxy.cpp \
+		./server/ServerWeb.cpp \
+		./server/ServerManager.cpp \
 		./server/Kqueue.cpp \
+		./server/HttpMsg.cpp \
+		./server/HttpRequest.cpp \
+		./server/HttpResponse.cpp \
 		./exception/Exception.cpp
 OBJS = $(SRCS:.cpp=.o)
 

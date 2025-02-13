@@ -14,6 +14,8 @@ class Kqueue {
 	public:
 		static Kqueue	*getInstance();
 		static int		getKqueue();
+		static void		addEvent(int fd, int filter, int flags);
+		static void		removeEvent(int fd, int filter);
 };
 
 #endif

@@ -1,14 +1,14 @@
 #include <iostream>
 #include <stdexcept>
-#include "Server.hpp"
+#include "ServerManager.hpp"
 
 int	main(int argc, char *argv[]) {
 	(void)	argc;
 	(void)  argv;
 
 	try {
-		Server server;
-		server.runServ();
+		ServerManager	server_manager;
+		server_manager.runServer();
 		std::cout << "it is webserv" << std::endl;
 		//프로그램 꺼야 되는 거면 
 	}
