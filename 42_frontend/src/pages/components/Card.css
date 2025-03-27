@@ -1,0 +1,74 @@
+/* Card.css  */
+.card-container {
+  /* flex-direction: row; */
+  display: flex;
+  /* flex: 1; */
+  /* margin-bottom: 100px; */
+  /* width: 100%; */
+  /* max-width: 600px; */
+  justify-content: space-between;
+  /* justify-content: space-around; */
+  /* background-color: white; */
+  /* border-radius: 10px black; */
+  align-items: center;
+}
+
+/* .card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+} */
+
+.card-img {
+  /* width: 100px; */
+  /* height: 100px; */
+  /* border-radius: 8px; */
+  /* object-fit: cover; */
+  /* padding: auto auto; */
+}
+
+.card-text {
+  flex: 1;
+  margin-left: 100px;
+  text-align: center;
+  color: #5b4e4b;
+}
+
+.card-text h3 {
+  /* display: block; */
+  /* font-size: 18px; */
+  font-weight: bold;
+  /* text-align: center; */
+}
+
+.card-description {
+  /* font-size: 14px; */
+  /* color: #666; */
+  /* text-align: center; */
+  /* margin-top: 5px; */
+}
+
+@media (max-width: 860px) {
+  .card-container {
+    flex-direction: column; /* Stack the image and text vertically */
+    align-items: flex-start; /* Align the items to the start of the container */
+  }
+
+  .card-img {
+    margin: auto auto;
+    /* margin-right: 0; Remove right margin */
+    margin-bottom: 15px; /* Add space below the image */
+  }
+
+  .card-text {
+    margin-left: 0;
+    margin: auto auto;
+    /* text-align: left; Ensure text is aligned to the left */
+  }
+  .card-text h3 {
+    font-size: 16px; /* Slightly smaller font size for title */
+  }
+
+  .card-description {
+    font-size: 12px; /* Slightly smaller font size for description */
+  }
+}

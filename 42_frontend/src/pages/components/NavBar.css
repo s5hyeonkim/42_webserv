@@ -1,0 +1,71 @@
+/* NavBar styles */
+.navbar {
+  display: flex;
+  justify-content: space-between; /* Space between logo and the right container */
+  align-items: center; /* Vertically align items */
+  padding: 10px 20px; /* Some padding around the navbar */
+  width: 100%; /* Ensure the navbar takes up the full width of the screen */
+  /* position: relative; */
+  /* position: fixed; */
+  /* top: 0; */
+  /* left: 0; */
+  background-color: white; /* Your preferred background color */
+  /* color: white; Text color for navbar */
+  border-bottom: 10px solid #dfc7b8;
+  margin-bottom: 10px;
+}
+
+.logo-container {
+  display: flex;
+  /* margin: auto 0px; */
+  /* padding: auto auto; */
+  align-items: center;
+}
+
+.logo-container img {
+  width: 50px; /* Set a size for your logo */
+  height: 50px; /* Set a size for your logo */
+  /* margin: auto 0px; */
+  /* margin-right: 10px; Space between logo image and the app name */
+}
+
+.right-container {
+  display: flex;
+  align-items: center;
+  margin-right: 30px;
+  gap: 20px; /* Add space between the Home link and the button */
+}
+
+.right-container a {
+  text-decoration: none;
+  color: #5b4e4b;
+  font-size: 16px;
+}
+
+.right-container a:hover {
+  color: #846860;
+  text-decoration: underline; /* Underline when hovering over Home link */
+}
+
+.right-container button {
+  padding: 8px 16px;
+  background-color: #bfaf98;
+  color: #f1f0e4; /* Button color */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  border-color: #bb9f8b;
+}
+
+.right-container button:hover {
+  background-color: #846860; /* Light gray hover effect */
+  color: #bfaf98;
+}
+
+@media (max-width: 300px) {
+  .right-container a {
+    display: none;
+  }
+}
