@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 // import { useUserStore } from "../User.ts";
 // import axios from "axios";
 // import { $ } from "../axios";
 import { $ } from "../axios";
-import { useParams } from "react-router-dom";
+import "./DirectoryPage.css";
+import { useLocation } from "react-router-dom";
 
 interface Directory {
   file_name: string;
@@ -29,24 +30,15 @@ const fetchDirectoryData = async (addr: string): Promise<Directory[]> => {
 export default function DirectoryPage() {
   const [content, setContent] = useState<Directory[] | []>([]);
   const [file, setFile] = useState<File | null>(null);
-  var { addr } = useParams();
+  const location = useLocation();
 
-  console.log("dir page1");
   useEffect(() => {
-    console.log("dir page2");
-    if (addr == null) addr = "/";
-    fetchDirectoryData("/api/dir" + addr).then((data) => {
+    console.log("location");
+    console.log(location);
+    fetchDirectoryData("/api"+ location.pathname).then((data) => {
       setContent(data);
     });
-  }, [addr]);
-  if (!content) return <div> Loading</div>;
-  // const [directories] = useState<Directory[]>([
-  //   { id: 1, name: "Documents" },
-  //   { id: 2, name: "Pictures" },
-  //   { id: 3, name: "Music" },
-  // ]);
-  // const { user } = useUserStore();
-  // const [newDir, setNewDir] = useState("");
+  }, [location]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
@@ -69,17 +61,27 @@ export default function DirectoryPage() {
     }).then((res) => res.data);
     return response;
   };
+  if (!content) return <div> Loading</div>;
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white shadow-lg rounded-lg">
-      <h2 className="text-xl font-semibold mb-4">📂 Directory List</h2>
-      %.
-      <ul className="mb-4">
-        {content.map((dir, id) => (
-          <li key={id} className="p-2 border-b">
-            📁 {dir.file_name}
-            {dir.file_date}
-            {dir.file_size}
+<Fragment>
+<h2 className="dir-subject">📁 디렉토리 찾아보기</h2>
+
+<div className="file-browser">
+  <div className="tag-item">
+  <span className="tag-name">파일 이름</span>
+<span className="tag-name">마지막 변경 시각</span>
+<span className="tag-size">사이즈</span>
+
+  </div>
+
+      <ul className="directory-list">
+        {content.map((item, index) => (
+          <li key={index} className="list-item">
+<span className="icon">{item.file_name.endsWith("\\") ? "📁" : "📄"}</span>
+<span className="name">{item.file_name}</span>
+<span className="info">{item.file_date} </span>
+<span className="size">{item.file_size} </span>
           </li>
         ))}
       </ul>
@@ -88,6 +90,6 @@ export default function DirectoryPage() {
         <button type="submit">Upload File</button>
       </form>
     </div>
+    </Fragment>
   );
 }
-2;

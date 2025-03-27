@@ -33,7 +33,7 @@ const router = createBrowserRouter([
             element: <DirectoryPage />,
           },
           {
-            path: ":dir",
+            path: "*",
             element: <DirectoryPage />,
           },
         ],

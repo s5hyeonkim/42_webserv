@@ -29,25 +29,20 @@ function FileInput() {
   };
 
   const handleSubmit = async (e: React.FormEvent): Promise<Contenta | null> => {
+    // const handleSubmit = () => {
+    console.log("file submit??");
+    console.log(file);
     e.preventDefault();
     if (file == null) return null;
-
     console.log("send file -ing");
-    const formData = new FormData();
-    const user = { user_id: 1, user_name: "aa" };
-    formData.append("user_id", user!.user_id.toString()); // Append userId
-    formData.append("content", file);
-    for (let [key, value] of formData.entries()) {
-      console.log(key, value);
-    }
-    const response = await $.post(`/api/chatroom/files`, formData, {
+    const response = await $.post(`/api/chatroom/files`, file, {
       headers: {
-        "Content-Type": "multipart/form-data",
+        "Content-Type": "application/x-www-form-urlencoded",
       },
     }).then((res) => res.data);
     return response;
   };
-
+  
   return (
     <form onSubmit={handleSubmit} className="file-input-form">
       <input type="file" onChange={handleFileChange} />
