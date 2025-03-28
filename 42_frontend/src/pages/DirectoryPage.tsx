@@ -26,6 +26,8 @@ const convertTimestampToDate = (timestamp: number): string => {
 };
 
 const fetchDirectoryData = async (addr: string): Promise<Directory[]> => {
+  console.log("request to server to ");
+  console.log(addr);
   const response = await $.get(addr).then((res) => res.data);
   console.log(response);
   return response;
@@ -39,7 +41,7 @@ export default function DirectoryPage() {
   useEffect(() => {
     console.log("location");
     console.log(location);
-    fetchDirectoryData("/api"+ location.pathname).then((data) => {
+    fetchDirectoryData("/api" + location.pathname).then((data) => {
       setContent(data);
     });
   }, [location]);
@@ -68,29 +70,32 @@ export default function DirectoryPage() {
   if (!content) return <div> Loading</div>;
 
   return (
-<Fragment>
-<h2 className="dir-subject">📁 디렉토리 검색</h2>
+    <Fragment>
+      <h2 className="dir-subject">📁 디렉토리 검색</h2>
 
-<table className="directory-table">
-  <thead>
-    <tr>
-      {/* <th/> */}
-      <th style={{}}>파일 이름</th>
-      <th>마지막 변경 시각</th>
-      <th>사이즈</th>
-    </tr>
-  </thead>
-  <tbody>
-    {content.map((item, index) => (
-      <tr key={index}>
-        {/* <td className="icon">{item.file_name.endsWith("\\") ? "📁" : "📄"}</td> */}
-        <td className="name">{item.file_name.endsWith("\\") ? "📁" : "📄"}{item.file_name}</td>
-        <td className="info">{convertTimestampToDate(item.file_date)}</td>
-        <td className="size">{item.file_size}</td>
-      </tr>
-    ))}
-  </tbody>
-</table>
+      <table className="directory-table">
+        <thead>
+          <tr>
+            {/* <th/> */}
+            <th style={{}}>파일 이름</th>
+            <th>마지막 변경 시각</th>
+            <th>사이즈</th>
+          </tr>
+        </thead>
+        <tbody>
+          {content.map((item, index) => (
+            <tr key={index}>
+              {/* <td className="icon">{item.file_name.endsWith("\\") ? "📁" : "📄"}</td> */}
+              <td className="name">
+                {item.file_name.endsWith("\\") ? "📁" : "📄"}
+                {item.file_name}
+              </td>
+              <td className="info">{convertTimestampToDate(item.file_date)}</td>
+              <td className="size">{item.file_size}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
       <form onSubmit={handleSubmit} className="file-input-form">
         <input type="file" onChange={handleFileChange} />
         <button type="submit">Upload File</button>
