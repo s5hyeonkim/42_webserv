@@ -22,14 +22,11 @@ function Modal({ isOpen, onClose, children }: PropsWithChildren<ModalProps>) {
       }).then((res) => res.data);
       console.log("inputText: ");
       console.log(query);
-      setUser(res.body);
       console.log("data");
-      console.log(res.data);
-      console.log("response code");
-      console.log(res.status);
-      console.log("response header location");
-      console.log(res.headers.Location);
-      navigate(res.data.redirect_url, { replace: true });
+      console.log(res);
+      console.log(res.body);
+      setUser(res.body);
+      navigate(res.redirect.redirect_url, { replace: true });
     } catch (e) {
       console.error(e);
     }

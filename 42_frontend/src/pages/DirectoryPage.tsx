@@ -20,7 +20,9 @@ const fetchDirectoryData = async (addr: string): Promise<Directory[]> => {
   console.log("request to server to ");
   console.log(addr);
   const response = await $.get(addr).then((res) => res.data);
+  console.log("response");
   console.log(response);
+  console.log(response.filelist);
   return response.filelist;
 };
 
