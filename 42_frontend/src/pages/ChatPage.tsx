@@ -1,4 +1,4 @@
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import "./ChatPage.css";
 import { useEffect } from "react";
 // import { $ } from "../axios.ts";
@@ -16,10 +16,6 @@ const ChatPage = () => {
     queryFn: getChattingList,
     staleTime: 1000,
   });
-  const location = useLocation();
-  console.log("this is chatpage");
-  console.log("the url is");
-  console.log(location);
   // const [data, setData] = useState<chatting>(); // State to store fetched data
   // const [loading, setLoading] = useState(true); // State to manage loading state
 
@@ -39,7 +35,6 @@ const ChatPage = () => {
   // }, []);
   const { users, setUsers, setNewUsers, setDeletedUsers } = useUserStore();
   const { setContents, setOldContents, setRecentContents } = useContentStore();
-  const navigate = useNavigate();
 
   const classifyComments = (contents: Content[]) => {
     const now = new Date();
@@ -61,7 +56,6 @@ const ChatPage = () => {
     );
     return { addedUsers, deletedUsers };
   };
-  navigate(location.pathname);
   useEffect(() => {
     // const fetch = async () => {
     //   const res = await $.get(`/chatroom`);

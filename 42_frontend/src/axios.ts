@@ -26,6 +26,8 @@ $.interceptors.response.use(
       }).then(() => {
         window.location.href = `locahost:2424/main`;
       });
+    } else if (error.response.data.redirect_url) {
+      window.location.href = `locahost:2424/${error.response.data.redirect_url}`;
     }
     return Promise.reject(error);
   }

@@ -68,7 +68,7 @@ app.get("/", (req, res) => {
 });
 app.get("/dir", (req, res) => {
   res.sendFile(
-    "C:\\Users\\alice\\OneDrive\\바탕 화면\\중요\\webserv\\42_frontend\\dist\\index.html"
+    "C:\\Users\\alice\\OneD1rive\\바탕 화면\\중요\\webserv\\42_frontend\\dist\\index.html"
     // "index.html"
     // "C:\\Users\\alice\\Desktop\\webserv\\webserv\\42_frontend\\dist\\index.html"
   );
