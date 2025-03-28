@@ -17,6 +17,7 @@ $.interceptors.response.use(
     return response;
   },
   (error) => {
+    console.log("here error!!!!");
     if (error.response.status === 401) {
       Swal.fire({
         icon: "error",
@@ -26,8 +27,8 @@ $.interceptors.response.use(
       }).then(() => {
         window.location.href = `locahost:2424/main`;
       });
-    } else if (error.response.data.redirect_url) {
-      window.location.href = `locahost:2424/${error.response.data.redirect_url}`;
+    } else if (error.response.data.redirect.redirect_url) {
+      window.location.href = `locahost:2424/${error.response.data.redirect.redirect_url}`;
     }
     return Promise.reject(error);
   }
