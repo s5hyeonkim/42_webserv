@@ -105,11 +105,15 @@ app.post("/api/users/register", (req, res) => {
   // console.log("register");
   // console.log(req.body);
   // console.log(req.data);
-  res.setHeader("Location", "/chatroom");
+  // res.setHeader("Location", "/chatroom");
   const users = {
-    user_id: "1",
-    user_name: req.body?.user_name,
-    redirect_url: "/chatroom",
+    redirect: {
+      redirect_url: "/chatroom",
+    },
+    body: {
+      user_id: "1",
+      user_name: req.body?.user_name,
+    },
   };
   res.json(users);
 });
