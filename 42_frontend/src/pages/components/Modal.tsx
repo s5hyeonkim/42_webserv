@@ -2,7 +2,7 @@ import { PropsWithChildren, useState } from "react";
 import "./Modal.css";
 import { useUserStore } from "../../User.ts";
 import { $ } from "../../axios.ts";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 interface ModalProps {
   isOpen: boolean;
@@ -11,7 +11,7 @@ interface ModalProps {
 function Modal({ isOpen, onClose, children }: PropsWithChildren<ModalProps>) {
   const [loading, setLoading] = useState(false);
   const [query, setQuery] = useState(""); // Input state for search query
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { setUser } = useUserStore();
 
   const sendUserInfo = async () => {
@@ -25,9 +25,12 @@ function Modal({ isOpen, onClose, children }: PropsWithChildren<ModalProps>) {
       setUser({ user_id: res.data.user_id, user_name: res.data.user_name });
       console.log("data");
       console.log(res.data);
-      console.log(res.data.user_id);
-      console.log(res.data.user_name);
-      navigate(res.data.redirect_url, {replace: true});
+      console.log("response code");
+      console.log(res.status);
+      console.log("response header location");
+      console.log(res.headers.location);
+      console.log(res.headers.Location);
+      // navigate(res.data.redirect_url, { replace: true });
     } catch (e) {
       console.error(e);
     }
