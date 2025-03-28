@@ -36,23 +36,25 @@ var data2 = {
   is_comment: false,
   timestampe: 1231231222,
 };
-var data3 = [
-  {
-    file_name: "aa",
-    file_date: 1473111231,
-    file_size: 1111,
-  },
-  {
-    file_name: "bb",
-    file_date: 1573111231,
-    file_size: 1111,
-  },
-  {
-    file_name: "cc",
-    file_date: 1673121111,
-    file_size: 1111,
-  },
-];
+var data3 = {
+  filelist: [
+    {
+      file_name: "aa",
+      file_date: 1473111231,
+      file_size: 1111,
+    },
+    {
+      file_name: "bb",
+      file_date: 1573111231,
+      file_size: 1111,
+    },
+    {
+      file_name: "cc",
+      file_date: 1673121111,
+      file_size: 1111,
+    },
+  ],
+};
 app.use(
   "/assets",
   express.static(
@@ -68,7 +70,7 @@ app.get("/", (req, res) => {
 });
 app.get("/dir", (req, res) => {
   res.sendFile(
-    "C:\\Users\\alice\\OneD1rive\\바탕 화면\\중요\\webserv\\42_frontend\\dist\\index.html"
+    "C:\\Users\\alice\\OneDrive\\바탕 화면\\중요\\webserv\\42_frontend\\dist\\index.html"
     // "index.html"
     // "C:\\Users\\alice\\Desktop\\webserv\\webserv\\42_frontend\\dist\\index.html"
   );
