@@ -1,10 +1,10 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 // const sessionId =
 //   sessionStorage.getItem("sessionid") || localStorage.getItem("sessionid");
-const navigate = useNavigate();
+// const navigate = useNavigate();
 
 export const $ = axios.create({
   baseURL: "http://localhost:2424",
@@ -31,8 +31,8 @@ $.interceptors.response.use(
         window.location.href = `http://localhost:2424/main`;
       });
     } else if (error.response.data.redirect.redirect_url) {
-      // window.location.href = `http://localhost:2424${error.response.data.redirect.redirect_url}`;
-      navigate(error.response.data.redirect.redirect_url, { replace: true });
+      window.location.href = `http://localhost:2424${error.response.data.redirect.redirect_url}`;
+      // navigate(error.response.data.redirect.redirect_url, { replace: true });
     }
     return Promise.reject(error);
   }
