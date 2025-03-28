@@ -142,7 +142,11 @@ app.get("/api/chatroom", (req, res) => {
 
 app.get("/api/dir", (req, res) => {
   console.log("dir page");
-  res.json(data3);
+  res.status(404).send({
+    redirect: {
+      redirect_url: "/40x.html",
+    },
+  });
 });
 
 app.get("/api/dir/*", (req, res) => {
