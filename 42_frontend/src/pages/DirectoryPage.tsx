@@ -21,7 +21,7 @@ const fetchDirectoryData = async (addr: string): Promise<Directory[]> => {
   console.log(addr);
   const response = await $.get(addr).then((res) => res.data);
   console.log(response);
-  return response;
+  return response.filelist;
 };
 
 export default function DirectoryPage() {

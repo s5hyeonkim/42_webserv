@@ -19,10 +19,10 @@ function Modal({ isOpen, onClose, children }: PropsWithChildren<ModalProps>) {
     try {
       const res = await $.post("/api/users/register", {
         user_name: query,
-      });
+      }).then((res) => res.data);
       console.log("inputText: ");
       console.log(query);
-      setUser({ user_id: res.data.user_id, user_name: res.data.user_name });
+      setUser(res.body);
       console.log("data");
       console.log(res.data);
       console.log("response code");
