@@ -1,9 +1,5 @@
 .dir-subject {
-    text-align: center;
-}
-
-.tag-item {
-    align-items: center;
+    /* text-align: center; */
 }
 
 .file-browser {
@@ -12,48 +8,50 @@
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    max-width: 500px;
+    border-collapse: collapse;
+    max-width: 800px;
     margin: 30px auto;
 }
+
 
 h2 {
     font-size: 18px;
     margin-bottom: 10px;
-    color: #333;
+    color: #564A49;
 }
 
-ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.list-item {
-    display: flex;
-    align-items: center;
-    padding: 8px 0;
-    border-bottom: 1px solid #ddd;
-}
-
-.icon {
-    font-size: 20px;
-    margin-right: 10px;
-}
-
-.name {
-    flex: 1;
+.directory-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  /* Table header */
+  .directory-table th {
+    color: #564A49;
+    background-color: #DFC7B8;
+    padding: 10px 1px;
+    text-align: center;
     font-weight: bold;
-}
-
-.info {
-    font-size: 12px;
-    color: #666;
-}
-
-/* .file-list .icon {
-    color: #007bff;
-} */
-
-.directory-list .icon {
-    color: #ff9800;
-}
+    border-bottom: 2px solid #ddd;
+  }
+  
+  /* Table rows */
+  .directory-table td {
+    padding: 10px 1px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .directory-table td.icon {
+    width: 30px;
+    text-align: center;
+  }
+  
+.directory-table .name {
+    text-align: center; /* 파일 이름은 왼쪽 정렬 */
+  }
+  
+  .directory-table .info,
+  .directory-table .size {
+    text-align: center; /* 날짜와 사이즈는 오른쪽 정렬 */
+  }

@@ -39,17 +39,17 @@ var data2 = {
 var data3 = [
   {
     file_name: "aa",
-    file_date: 123123,
+    file_date: 1473111231,
     file_size: 1111,
   },
   {
     file_name: "bb",
-    file_date: 123123,
+    file_date: 1573111231,
     file_size: 1111,
   },
   {
     file_name: "cc",
-    file_date: 123123,
+    file_date: 1673121111,
     file_size: 1111,
   },
 ];
@@ -127,6 +127,11 @@ app.post("/api/chatroom/comments", (req, res) => {
 
 app.get("/api/chatroom", (req, res) => {
   res.json(data);
+});
+
+app.get("/api/dir", (req, res) => {
+  console.log("dir page");
+  res.json(data3);
 });
 
 app.get("/api/dir/*", (req, res) => {

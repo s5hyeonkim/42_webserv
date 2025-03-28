@@ -21,6 +21,11 @@ interface Contenta {
   timestamp: number;
 }
 
+const convertTimestampToDate = (timestamp: number): string => {
+  const date = new Date(timestamp * 1000); // 유닉스 타임스탬프는 초 단위이므로 밀리초로 변환
+  return date.toLocaleString(); // 기본적으로 로컬 형식으로 날짜를 변환
+};
+
 const fetchDirectoryData = async (addr: string): Promise<Directory[]> => {
   const response = await $.get(addr).then((res) => res.data);
   console.log(response);
@@ -65,31 +70,32 @@ export default function DirectoryPage() {
 
   return (
 <Fragment>
-<h2 className="dir-subject">📁 디렉토리 찾아보기</h2>
+<h2 className="dir-subject">📁 디렉토리 검색</h2>
 
-<div className="file-browser">
-  <div className="tag-item">
-  <span className="tag-name">파일 이름</span>
-<span className="tag-name">마지막 변경 시각</span>
-<span className="tag-size">사이즈</span>
-
-  </div>
-
-      <ul className="directory-list">
-        {content.map((item, index) => (
-          <li key={index} className="list-item">
-<span className="icon">{item.file_name.endsWith("\\") ? "📁" : "📄"}</span>
-<span className="name">{item.file_name}</span>
-<span className="info">{item.file_date} </span>
-<span className="size">{item.file_size} </span>
-          </li>
-        ))}
-      </ul>
+<table className="directory-table">
+  <thead>
+    <tr>
+      {/* <th/> */}
+      <th style={{}}>파일 이름</th>
+      <th>마지막 변경 시각</th>
+      <th>사이즈</th>
+    </tr>
+  </thead>
+  <tbody>
+    {content.map((item, index) => (
+      <tr key={index}>
+        {/* <td className="icon">{item.file_name.endsWith("\\") ? "📁" : "📄"}</td> */}
+        <td className="name">{item.file_name.endsWith("\\") ? "📁" : "📄"}{item.file_name}</td>
+        <td className="info">{convertTimestampToDate(item.file_date)}</td>
+        <td className="size">{item.file_size}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
       <form onSubmit={handleSubmit} className="file-input-form">
         <input type="file" onChange={handleFileChange} />
         <button type="submit">Upload File</button>
       </form>
-    </div>
     </Fragment>
   );
 }
