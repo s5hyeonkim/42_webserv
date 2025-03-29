@@ -136,7 +136,7 @@ app.post("/api/chatroom/comments", (req, res) => {
     content: req.body.content,
     is_comment: 1,
     is_exist: 1,
-    timestamp: 1232312312,
+    timestamp: Date.now(),
   };
   data.contents.push(content);
   console.log("data:");

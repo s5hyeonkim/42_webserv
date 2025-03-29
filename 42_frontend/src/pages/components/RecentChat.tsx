@@ -28,6 +28,7 @@ function RecentChats() {
       className="chat-display"
       style={{ maxHeight: "400px", overflowY: "scroll" }}
     >
+      메시지가 최근메시지:
       {recentContents.map((message) => (
         <div key={message.content_id} className="chat-message">
           <strong>{message.user_name}:</strong>{" "}
