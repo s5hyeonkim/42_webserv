@@ -1,36 +1,30 @@
 import { PropsWithChildren, useState } from "react";
 import "./Modal.css";
-import { useUserStore } from "../../User.ts";
-import { $ } from "../../axios.ts";
-import { useNavigate } from "react-router-dom";
+// import { useUserStore } from "../../User.ts";
+// import { $ } from "../../axios.ts";
+// import { useNavigate } from "react-router-dom";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onSubmit: (query: string) => Promise<void>;
 }
-function Modal({ isOpen, onClose, children }: PropsWithChildren<ModalProps>) {
+function Modal({
+  isOpen,
+  onClose,
+  onSubmit,
+  children,
+}: PropsWithChildren<ModalProps>) {
   const [loading, setLoading] = useState(false);
   const [query, setQuery] = useState(""); // Input state for search query
-  const navigate = useNavigate();
-  const { setUser } = useUserStore();
-
-  const sendUserInfo = async () => {
+  const [errorMessage, setErrorMessage] = useState("");
+  const handleSubmit = async () => {
+    if (!query.trim()) return;
     setLoading(true);
-    try {
-      const res = await $.post("/api/users/register", {
-        user_name: query,
-      }).then((res) => res.data);
-      console.log("inputText: ");
-      console.log(query);
-      console.log("data");
-      console.log(res);
-      console.log(res.body);
-      setUser(res.body);
-      navigate(res.redirect.redirect_url, { replace: true });
-    } catch (e) {
-      console.error(e);
-    }
-    onClose();
+    const error = await onSubmit(query);
+    if (error != null) {
+      setErrorMessage(error);
+    } else onClose();
     setLoading(false);
   };
 
@@ -46,10 +40,11 @@ function Modal({ isOpen, onClose, children }: PropsWithChildren<ModalProps>) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
-        <button onClick={sendUserInfo} disabled={loading}>
-          {loading ?? "로딩중"}
-          Submit
-        </button>
+        {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}{" "}
+        {/* 에러 메시지 표시 */}
+        <button onClick={handleSubmit} disabled={loading}>
+          {loading ? "로딩중..." : "Submit"}
+        </button>{" "}
         <button onClick={onClose}>Close</button>
       </div>
     </div>

@@ -1,25 +1,21 @@
 import { useState } from "react";
 import "./ChatInput.css";
-import { useUserStore } from "../../User.ts";
 import { $ } from "../../axios.ts";
 import useContentStore from "../../Content.ts";
+import { getUserId } from "../../Auth.tsx";
 
 export function ChatInput() {
   const [text, setText] = useState("");
-  const { user } = useUserStore();
   const { addContent } = useContentStore();
-  // const handleCommentChange = () => {
-  //   setText(text);2
-  // };
+  const userId = getUserId();
+
   console.log("checkuser");
-  console.log(user);
-  console.log(user?.user_id);
-  console.log(user?.user_name);
+  console.log(userId);
   console.log("text");
   console.log(text);
   const sendComment = async () => {
     const response = await $.post(`/api/chatroom/comments`, {
-      user_id: user!.user_id,
+      user_id: userId?.toString(),
       content: text,
     });
     setText("");

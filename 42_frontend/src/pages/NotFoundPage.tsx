@@ -71,23 +71,20 @@ const NotFoundPage = () => {
   const fileId = 9090;
   const handleDownload = async () => {
     try {
-      // Make an API call to download the file
       const response = await $.get(`/api/chatroom/files/download/${fileId}`, {
         headers: {
-          Accept: "application/octet-stream", // Expecting binary data
+          Accept: "application/octet-stream",
         },
       });
-      // Get the file content as a Blob
       const blob = new Blob([response.data], {
-        type: "appication/octec-stream",
+        type: "appication/octet-stream",
       });
 
-      // Create a link to download the file
       const link = document.createElement("a");
       link.href = URL.createObjectURL(blob);
-      link.download = "42-chat-downloaded-file.txt"; // Default file name
-      link.click(); // Trigger download
-      URL.revokeObjectURL(link.href); // Clean up the object URL
+      link.download = "42-chat-downloaded-file.txt";
+      link.click();
+      URL.revokeObjectURL(link.href);
     } catch (error) {
       setError("Download failed. Please try again.");
     }

@@ -70,44 +70,14 @@ app.get("/", (req, res) => {
     "C:\\Users\\alice\\OneDrive\\바탕 화면\\중요\\webserv\\42_frontend\\dist\\index.html"
   );
 });
-app.get("/qwe", (req, res) => {
+app.get("/*", (req, res) => {
   res.sendFile(
     // "index.html"
     "C:\\Users\\alice\\OneDrive\\바탕 화면\\중요\\webserv\\42_frontend\\dist\\index.html"
-  );
-});
-app.get("/dir", (req, res) => {
-  res.sendFile(
-    "C:\\Users\\alice\\OneDrive\\바탕 화면\\중요\\webserv\\42_frontend\\dist\\index.html"
-    // "index.html"
-    // "C:\\Users\\alice\\Desktop\\webserv\\webserv\\42_frontend\\dist\\index.html"
-  );
-});
-app.get("/dir/*", (req, res) => {
-  res.sendFile(
-    // "index.html"
-    "C:\\Users\\alice\\OneDrive\\바탕 화면\\중요\\webserv\\42_frontend\\dist\\index.html"
-    // "C:\\Users\\alice\\Desktop\\webserv\\webserv\\42_frontend\\dist\\index.html"
   );
 });
 app.get("/assets", (req, res) => {
   res.sendFile();
-});
-app.get("/main", (req, res) => {
-  res.sendFile(
-    // "index.html"
-    "C:\\Users\\alice\\OneDrive\\바탕 화면\\중요\\webserv\\42_frontend\\dist\\index.html"
-    // "C:\\Users\\alice\\Desktop\\webserv\\webserv\\42_frontend\\dist\\index.html"
-  );
-});
-app.get("/chatroom", (req, res) => {
-  console.log("into chatroompage");
-  res.sendFile(
-    "C:\\Users\\alice\\OneDrive\\바탕 화면\\중요\\webserv\\42_frontend\\dist\\index.html"
-    // "C:\\Users\\alice\\Desktop\\webserv\\webserv\\42_frontend\\dist\\index.html"
-    // "index.html"
-  );
-  console.log("into chatroompage2220");
 });
 app.post("/api/users/register", (req, res) => {
   // console.log("register");

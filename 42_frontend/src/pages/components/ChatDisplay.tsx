@@ -15,8 +15,7 @@ export function ChatDisplay() {
     staleTime: 1000,
   });
 
-  const { setUser, users, setUsers, setNewUsers, setDeletedUsers } =
-    useUserStore();
+  const { users, setUsers, setNewUsers, setDeletedUsers } = useUserStore();
   const { setContents, setOldContents, setRecentContents } = useContentStore();
 
   const classifyComments = (contents: Content[]) => {
@@ -57,7 +56,7 @@ export function ChatDisplay() {
     setOldContents(oldComments);
     setContents(currentData);
     setRecentContents(recentComments);
-  }, [data, setUser]);
+  }, [data]);
 
   if (isLoading) {
     return <div>Loading...</div>;
