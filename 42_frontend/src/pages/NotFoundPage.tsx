@@ -85,7 +85,7 @@ const NotFoundPage = () => {
       // Create a link to download the file
       const link = document.createElement("a");
       link.href = URL.createObjectURL(blob);
-      link.download = "42-chat-downloaded-file"; // Default file name
+      link.download = "42-chat-downloaded-file.txt"; // Default file name
       link.click(); // Trigger download
       URL.revokeObjectURL(link.href); // Clean up the object URL
     } catch (error) {
@@ -100,27 +100,26 @@ const NotFoundPage = () => {
       <Outlet />
       <div>NotFOund</div>
       <form onSubmit={handleSubmit} className="file-input-form">
-        1 <input type="file" onChange={handleFileChange} />
+        <input type="file" onChange={handleFileChange} />
         <button type="submit">Upload File</button>
       </form>
       <CardA
         className="p-2 flex justify-between items-center cursor-pointer"
         onClick={handleDownloadClick}
       >
-        File available for download
+        파일 다운로드
         <Download className="w-4 h-4" />
       </CardA>
       {modal && (
         <ModalA open={modal} onClose={() => setModalOpen(false)}>
           <div className="p-4">
-            <p>Do you want to download the file?</p>
+            <p>다운로드를 진행하시겠습니까?</p>
             <div className="flex justify-end space-x-2 mt-4">
               <Button onClick={() => setModalOpen(false)}>Cancel</Button>
               <Button onClick={handleDownload} variant="primary">
                 Download
               </Button>
             </div>
-            1
           </div>
         </ModalA>
       )}
