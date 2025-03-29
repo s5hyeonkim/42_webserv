@@ -1,6 +1,8 @@
 const { timeStamp } = require("console");
+const fs = require("fs");
 const express = require("express");
 const path = require("path");
+const mime = require("mime-types");
 const { stringify } = require("querystring");
 const app = express();
 const port = process.env.PORT || 2424;
@@ -63,6 +65,12 @@ app.use(
 );
 app.use(express.json());
 app.get("/", (req, res) => {
+  res.sendFile(
+    // "index.html"
+    "C:\\Users\\alice\\OneDrive\\바탕 화면\\중요\\webserv\\42_frontend\\dist\\index.html"
+  );
+});
+app.get("/qwe", (req, res) => {
   res.sendFile(
     // "index.html"
     "C:\\Users\\alice\\OneDrive\\바탕 화면\\중요\\webserv\\42_frontend\\dist\\index.html"
@@ -163,6 +171,58 @@ app.post("/api/chatroom/files", (req, res) => {
   console.log(req.headers["content-type"]);
   console.log(req.body);
   res.json(data2);
+});
+
+app.post("/api/chatroom/files/download", (req, res) => {
+  console.log("files arrived");
+  console2.log(req.headers["content-type"]);
+  console.log(req.body);
+  res.json(data2);
+});
+
+const files = {
+  9090: {
+    file_name: "example.txt",
+    file_path: "./files/example.txt", // Assuming this file exists in the "files" folder
+  },
+  // Add more files as needed
+};
+
+app.get("/api/chatroom/files/download/:contentId", (req, res) => {
+  const contentId = req.params.contentId;
+  const file = files[contentId];
+
+  if (!file) {
+    return res.status(404).json({ error: "File not found" });
+  }
+
+  const { file_name, file_path } = file;
+
+  // Check if file exists
+  fs.stat(file_path, (err, stats) => {
+    if (err || !stats.isFile()) {
+      return res
+        .status(500)
+        .json({ error: "File does not exist on the server" });
+    }
+
+    // Set the correct MIME type for the file
+    const mimeType = mime.lookup(file_name) || "application/octet-stream";
+
+    // Set the response headers
+    res.setHeader("Content-Disposition", `attachment; filename="${file_name}"`);
+    res.setHeader("Content-Type", mimeType);
+    res.setHeader("Content-Length", stats.size);
+
+    // Pipe the file content to the response
+    const fileStream = fs.createReadStream(file_path);
+    fileStream.pipe(res);
+
+    // Handle errors during streaming
+    fileStream.on("error", (error) => {
+      res.status(500).json({ error: "Error streaming the file" });
+    });
+  });
 });
 
 app.listen(port, () => {
