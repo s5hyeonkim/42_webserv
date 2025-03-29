@@ -3,6 +3,7 @@ import "./ChatPage.css";
 import ChatDisplay from "./components/ChatDisplay.tsx";
 import ChatInput from "./components/ChatInput.tsx";
 import FileInput from "./components/FileInput.tsx";
+import FileDownload from "./components/FileDownload.tsx";
 
 const ChatPage = () => {
   return (
@@ -11,6 +12,7 @@ const ChatPage = () => {
       <ChatDisplay />
       <ChatInput />
       <FileInput />
+      <FileDownload />
     </div>
   );
 };

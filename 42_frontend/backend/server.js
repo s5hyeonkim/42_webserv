@@ -70,12 +70,6 @@ app.get("/", (req, res) => {
     "C:\\Users\\alice\\OneDrive\\바탕 화면\\중요\\webserv\\42_frontend\\dist\\index.html"
   );
 });
-app.get("/*", (req, res) => {
-  res.sendFile(
-    // "index.html"
-    "C:\\Users\\alice\\OneDrive\\바탕 화면\\중요\\webserv\\42_frontend\\dist\\index.html"
-  );
-});
 app.get("/assets", (req, res) => {
   res.sendFile();
 });
@@ -109,12 +103,13 @@ app.post("/api/chatroom/comments", (req, res) => {
     timestamp: Date.now(),
   };
   data.contents.push(content);
-  console.log("data:");
-  console.log(data);
+  // console.log("data:");
+  // console.log(data);
   res.json(data);
 });
 
 app.get("/api/chatroom", (req, res) => {
+  console.log("/api/chatroom request");
   res.json(data);
 });
 
@@ -133,6 +128,7 @@ app.get("/api/dir/*", (req, res) => {
 });
 
 app.get("/api/chatroom/comments", (req, res) => {
+  console.log("/api/chatroom/comments request");
   res.json(data);
 });
 
@@ -193,6 +189,13 @@ app.get("/api/chatroom/files/download/:contentId", (req, res) => {
       res.status(500).json({ error: "Error streaming the file" });
     });
   });
+});
+app.get("/*", (req, res) => {
+  console.log(req.originalUrl);
+  res.sendFile(
+    // "index.html"
+    "C:\\Users\\alice\\OneDrive\\바탕 화면\\중요\\webserv\\42_frontend\\dist\\index.html"
+  );
 });
 
 app.listen(port, () => {

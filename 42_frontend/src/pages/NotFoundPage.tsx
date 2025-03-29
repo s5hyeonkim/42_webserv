@@ -65,6 +65,8 @@ const NotFoundPage = () => {
     return response;
   };
 
+  console.log("not found page");
+
   const handleDownloadClick = () => {
     setModalOpen(true);
   };
@@ -90,8 +92,6 @@ const NotFoundPage = () => {
     }
     setModalOpen(false);
   };
-  console.log("not found page");
-
   return (
     <div>
       <Outlet />

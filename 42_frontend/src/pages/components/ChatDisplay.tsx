@@ -13,11 +13,13 @@ export function ChatDisplay() {
     queryKey: ["chatting"],
     queryFn: getChattingList,
     staleTime: 1000,
+    refetchOnMount: true,
   });
-
   const { users, setUsers, setNewUsers, setDeletedUsers } = useUserStore();
   const { setContents, setOldContents, setRecentContents } = useContentStore();
 
+  console.log("data received");
+  console.log(data);
   const classifyComments = (contents: Content[]) => {
     const now = new Date();
     const recentComments = contents.filter(
