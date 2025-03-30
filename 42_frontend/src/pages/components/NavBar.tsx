@@ -32,6 +32,8 @@ function NavBar() {
     console.log(res.body);
     // setUser(res.body);
     login(Number(res.body.user_id));
+    console.log("redirect url received");
+    console.log(res.redirect.redirect_url);
     navigate(res.redirect.redirect_url, { replace: true });
   };
 
