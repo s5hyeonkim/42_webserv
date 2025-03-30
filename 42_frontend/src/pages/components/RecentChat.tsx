@@ -1,5 +1,7 @@
 import { useUserStore } from "../../User.ts";
 import useContentStore from "../../Content.ts";
+import MessageItem from "./MessageItem.tsx";
+import { $ } from "../../axios.ts";
 
 function RecentChats() {
   // const { data, isLoading } = getChattingList();
@@ -21,7 +23,43 @@ function RecentChats() {
     // deletedContents,
     // setDeletedContents,
   } = useContentStore();
+  const handleDeleteFile = async (content_id: number) => {
+    await $.delete(`/api/chatrooom/files/${content_id}`)
+      .then(() => {})
+      .catch(() => {
+        return "파일 삭제에 실패하였습니다.";
+      });
+  };
+  const handleDeleteComment = async (content_id: number) => {
+    await $.delete(`/api/chatrooom/comments/${content_id}`)
+      .then(() => {})
+      .catch(() => {
+        return "파일 삭제에 실패하였습니다.";
+      });
+  };
+  const handleDownloadFile = async (content_id: number) => {
+    try {
+      const response = await $.get(
+        `/api/chatroom/files/download/${content_id}`,
+        {
+          headers: {
+            Accept: "application/octet-stream",
+          },
+        }
+      );
+      const blob = new Blob([response.data], {
+        type: "appication/octet-stream",
+      });
 
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "42-chat-downloaded-file.txt";
+      link.click();
+      URL.revokeObjectURL(link.href);
+    } catch (error) {
+      return "Download failed. Please try again.";
+    }
+  };
   // if (isLoading) return <p> Chatting Page를 불러오고 있습니다.</p>;
   return (
     <div
@@ -30,17 +68,12 @@ function RecentChats() {
     >
       메시지가 최근메시지:
       {recentContents.map((message) => (
-        <div key={message.content_id} className="chat-message">
-          <strong>{message.user_name}:</strong>{" "}
-          {message.is_exist ? (
-            <span>{message.content}</span>
-          ) : (
-            // <span>{message.data}</span>
-            <div> 메시지가 삭제되었습니다. </div>
-          )}
-          <br />
-          <small>{message.timestamp}</small>
-        </div>
+        <MessageItem
+          key={message.content_id}
+          message={message}
+          onDelete={message.is_comment ? handleDeleteComment : handleDeleteFile}
+          onDownload={message.is_comment ? undefined : handleDownloadFile}
+        />
       ))}
       <ul>
         {deletedUsers?.map((user) => (
