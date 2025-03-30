@@ -3,7 +3,7 @@ import { create } from "zustand";
 
 export interface Content {
   user_id: string;
-  content_id: number | null;
+  content_id: number;
   user_name: number;
   content: string;
   is_exist: boolean;
