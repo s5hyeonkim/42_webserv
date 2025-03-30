@@ -73,6 +73,15 @@ app.get("/", (req, res) => {
 app.get("/assets", (req, res) => {
   res.sendFile();
 });
+app.delete("/api/chatroom/files/:contentId", (req, res) => {
+  const contentId = req.params.contentId;
+  console.log(contentId);
+  3;
+});
+app.delete("/api/chatroom/comments/:contentId", (req, res) => {
+  const contentId = req.params.contentId;
+  console.log(contentId);
+});
 app.post("/api/users/register", (req, res) => {
   // console.log("register");
   // console.log(req.body);

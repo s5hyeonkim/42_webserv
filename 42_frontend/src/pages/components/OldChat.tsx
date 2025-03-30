@@ -1,4 +1,5 @@
 import useContentStore from "../../Content";
+import MessageItem from "./MessageItem";
 
 function OldChats() {
   const { oldContents } = useContentStore();
@@ -9,20 +10,10 @@ function OldChats() {
       <h2>Old Chat Messages (More than 5 minutes ago)</h2>
       <ul>
         {oldContents.map((message) => (
-          <li key={message.content_id}>
-            <strong>{message.user_name}:</strong>{" "}
-            {message.is_exist ? (
-              <span>{message.content}</span>
-            ) : (
-              // <span>{message.data}</span>
-              <div> 메시지가 삭제되었습니다. </div>
-            )}
-            <small>{message.timestamp}</small>
-          </li>
+          <MessageItem key={message.content_id} message={message} />
         ))}
       </ul>
     </div>
   );
 }
-
 export default OldChats;
