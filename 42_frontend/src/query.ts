@@ -9,6 +9,7 @@ export interface chatting {
 
 export const getChattingList = async (): Promise<chatting> => {
   const res = await $.get(`/api/chatroom`);
+  console.log("chatting renew");
   console.log(res);
   return res.data;
   //     if (localStorage.getItem("SessionId")) {}

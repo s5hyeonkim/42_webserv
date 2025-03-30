@@ -16,19 +16,26 @@ const convertTimestampToDate = (timestamp: number): string => {
   return date.toLocaleString(); // 기본적으로 로컬 형식으로 날짜를 변환
 };
 
-const fetchDirectoryData = async (addr: string): Promise<Directory[]> => {
-  console.log("request to server to ");
-  console.log(addr);
-  const response = await $.get(addr).then((res) => res.data);
-  console.log("response");
-  console.log(response);
-  console.log(response.filelist);
-  return response.filelist;
-};
-
 export default function DirectoryPage() {
   const [content, setContent] = useState<Directory[] | []>([]);
+  const [error, setError] = useState(null);
   const location = useLocation();
+
+  const fetchDirectoryData = async (addr: string): Promise<Directory[]> => {
+    console.log("request to server to ");
+    console.log(addr);
+    const response = await $.get(addr)
+      .then((res) => res.data)
+      .catch((err) => {
+        console.log("dir page error");
+        console.log(err);
+        setError(err.data.Error);
+      });
+    console.log("response");
+    console.log(response);
+    console.log(response.filelist);
+    return response.filelist;
+  };
 
   useEffect(() => {
     console.log("location");
@@ -66,6 +73,7 @@ export default function DirectoryPage() {
           ))}
         </tbody>
       </table>
+      <div>{error}</div>
     </Fragment>
   );
 }

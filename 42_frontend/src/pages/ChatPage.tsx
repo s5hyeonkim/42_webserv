@@ -6,6 +6,7 @@ import FileInput from "./components/FileInput.tsx";
 import FileDownload from "./components/FileDownload.tsx";
 
 const ChatPage = () => {
+  console.log("this is chat page");
   return (
     <div>
       <Outlet />

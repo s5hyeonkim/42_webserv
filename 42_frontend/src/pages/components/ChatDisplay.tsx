@@ -18,7 +18,7 @@ export function ChatDisplay() {
   const { users, setUsers, setNewUsers, setDeletedUsers } = useUserStore();
   const { setContents, setOldContents, setRecentContents } = useContentStore();
 
-  console.log("data received");
+  console.log("chat data received");
   console.log(data);
   const classifyComments = (contents: Content[]) => {
     const now = new Date();
