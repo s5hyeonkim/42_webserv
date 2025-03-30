@@ -19,7 +19,7 @@ function Modal({
   const [query, setQuery] = useState(""); // Input state for search query
   const [errorMessage, setErrorMessage] = useState("");
   const handleSubmit = async () => {
-    if (!query.trim()) return;
+    // if (!query.trim()) return;
     setLoading(true);
     const error = await onSubmit(query);
     if (error != null) {
