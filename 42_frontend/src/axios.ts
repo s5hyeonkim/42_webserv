@@ -20,7 +20,7 @@ $.interceptors.response.use(
   },
   (error) => {
     console.log("here error!!!!");
-    console.error(error.respose);
+    console.error(error.response);
     if (error.response.status === 401) {
       Swal.fire({
         icon: "error",

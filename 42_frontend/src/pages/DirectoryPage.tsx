@@ -29,7 +29,8 @@ export default function DirectoryPage() {
       .catch((err) => {
         console.log("dir page error");
         console.log(err);
-        setError(err.data.Error);
+        console.log(err);
+        setError(err.response.data.Error);
       });
     console.log("response");
     console.log(response);
