@@ -1,4 +1,4 @@
-import Card from "./components/Card.tsx"; // Import the Card component
+import Card from "./components/Card.tsx";
 import logoImageMedium from "../assets/logoMain.svg";
 import { cardData } from "./components/cardData.ts";
 import "./MainPage.css";
@@ -6,24 +6,6 @@ import { Fragment } from "react/jsx-runtime";
 import NavBar from "./components/NavBar.tsx";
 import BottomNavBar from "./components/BottomNavBar.tsx";
 import { Outlet } from "react-router-dom";
-
-// const mainData = [
-//   {
-//     image: cardImage1,
-//     subhead: "Instant Messaging",
-//     description: 'Say goodbye to "I\'m on my way"delays.\nOut',
-//   },
-//   {
-//     image: cardIm2age2,
-//     subhead: "Group Chats",
-//     description: "This is the description for card 2.",
-//   },
-//   {
-//     image: cardImage3,
-//     subhead: "Send Anything!",
-//     description: "This is the description for card 3.",
-//   },
-// ];
 
 const MainPage = () => {
   return (

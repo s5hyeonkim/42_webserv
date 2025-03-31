@@ -6,5 +6,6 @@ npm install axios
 npm install react-router-dom
 npm install sweetalert2
 npm install @tanstack/react-query-devtools
-# npm install @types/node
 npm install @tanstack/react-query
+npm install --save react-toastify
+npm install @types/styled-components

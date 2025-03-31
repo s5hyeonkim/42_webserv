@@ -17,11 +17,11 @@ export const getUserId = (): number | null => {
   return userInfo ? Number(userInfo) : null;
 };
 
-export const saveUserId = (userId: number) => {
+const saveUserId = (userId: number) => {
   localStorage.setItem("userInfo", JSON.stringify(userId));
 };
 
-export const clearUserId = () => {
+const clearUserId = () => {
   localStorage.removeItem("userInfo");
 };
 

@@ -26,7 +26,6 @@ h2 {
     margin-top: 20px;
   }
   
-  /* Table header */
   .directory-table th {
     color: #564A49;
     background-color: #DFC7B8;
@@ -36,7 +35,6 @@ h2 {
     border-bottom: 2px solid #ddd;
   }
   
-  /* Table rows */
   .directory-table td {
     padding: 10px 1px;
     border-bottom: 1px solid #ddd;
@@ -48,10 +46,10 @@ h2 {
   }
   
 .directory-table .name {
-    text-align: center; /* 파일 이름은 왼쪽 정렬 */
+    text-align: center;
   }
   
   .directory-table .info,
   .directory-table .size {
-    text-align: center; /* 날짜와 사이즈는 오른쪽 정렬 */
+    text-align: center;
   }

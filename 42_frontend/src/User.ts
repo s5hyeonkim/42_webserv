@@ -1,5 +1,4 @@
 import { create } from "zustand";
-// import { useQuery } from "@tanstack/react-query";
 
 export interface User {
   user_id: number;

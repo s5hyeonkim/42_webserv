@@ -1,8 +1,5 @@
 import { PropsWithChildren, useState } from "react";
 import "./Modal.css";
-// import { useUserStore } from "../../User.ts";
-// import { $ } from "../../axios.ts";
-// import { useNavigate } from "react-router-dom";
 
 interface ModalProps {
   isOpen: boolean;
@@ -16,7 +13,7 @@ function Modal({
   children,
 }: PropsWithChildren<ModalProps>) {
   const [loading, setLoading] = useState(false);
-  const [query, setQuery] = useState(""); // Input state for search query
+  const [query, setQuery] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const handleSubmit = async () => {
     // if (!query.trim()) return;
@@ -41,7 +38,6 @@ function Modal({
           onChange={(e) => setQuery(e.target.value)}
         />
         {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}{" "}
-        {/* 에러 메시지 표시 */}
         <button onClick={handleSubmit} disabled={loading}>
           {loading ? "로딩중..." : "Submit"}
         </button>{" "}

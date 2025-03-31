@@ -1,6 +1,4 @@
 import { Fragment, useEffect, useState } from "react";
-// import axios from "axios";
-// import { $ } from "../axios";
 import { $ } from "../axios";
 import "./DirectoryPage.css";
 import { useLocation } from "react-router-dom";
@@ -12,8 +10,8 @@ interface Directory {
 }
 
 const convertTimestampToDate = (timestamp: number): string => {
-  const date = new Date(timestamp * 1000); // 유닉스 타임스탬프는 초 단위이므로 밀리초로 변환
-  return date.toLocaleString(); // 기본적으로 로컬 형식으로 날짜를 변환
+  const date = new Date(timestamp * 1000);
+  return date.toLocaleString();
 };
 
 export default function DirectoryPage() {
@@ -54,7 +52,6 @@ export default function DirectoryPage() {
       <table className="directory-table">
         <thead>
           <tr>
-            {/* <th/> */}
             <th style={{}}>파일 이름</th>
             <th>마지막 변경 시각</th>
             <th>사이즈</th>

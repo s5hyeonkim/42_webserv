@@ -1,4 +1,3 @@
-// cardData.ts
 import cardImage1 from "../../assets/cardimage1.png";
 import cardImage2 from "../../assets/cardimage2.png";
 import cardImage3 from "../../assets/cardimage3.png";

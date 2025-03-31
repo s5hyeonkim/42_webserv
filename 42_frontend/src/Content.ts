@@ -8,7 +8,7 @@ export interface Content {
   content: string;
   is_exist: boolean;
   is_comment: boolean;
-  timestamp: string;
+  timestamp: number;
 }
 
 export interface ContentStore {
@@ -18,7 +18,10 @@ export interface ContentStore {
   oldContents: Content[];
   setOldContents: (oldContents: Content[]) => void;
   recentContents: Content[];
-  setRecentContents: (oldContents: Content[]) => void;
+  setRecentContents: (recentContents: Content[]) => void;
+  displayedContents: Content[];
+  addDisplayedContent: (displayedContent: Content) => void;
+  setDisplayedContents: (displayedContents: Content[]) => void;
   // deletedContents: Content[];
   // setDeletedContents: (deletedContents: Content[]) => void;
 }
@@ -32,6 +35,10 @@ export const useContentStore = create<ContentStore>((set) => ({
   setOldContents: (contents) => set({ oldContents: contents }),
   recentContents: [],
   setRecentContents: (contents) => set({ recentContents: contents }),
+  displayedContents: [],
+  addDisplayedContent: (content) =>
+    set((state) => ({ displayedContents: [...state.displayedContents, content] })),
+  setDisplayedContents: (contents) => set({displayedContents: contents}),
   // deletedContents: [],
   // setDeletedContents: (contents) => set({ deletedContents: contents }),
 }));

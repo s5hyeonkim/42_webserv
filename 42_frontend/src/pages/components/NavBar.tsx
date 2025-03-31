@@ -3,7 +3,6 @@ import logoImageSmall from "../../assets/logo.svg";
 import Modal from "./Modal.tsx";
 import "./NavBar.css";
 import { useNavigate } from "react-router-dom";
-// import { useUserStore } from "../../User.ts";
 import { $ } from "../../axios.ts";
 import { useAuth } from "../../Auth.tsx";
 
@@ -14,7 +13,6 @@ function NavBar() {
     setIsModalOpen(!isModalOpen);
   };
   const navigate = useNavigate();
-  // const { setUser } = useUserStore();
   const { login } = useAuth();
 
   const sendUserInfo = async (query: string) => {
@@ -30,7 +28,6 @@ function NavBar() {
     console.log("data");
     console.log(res);
     console.log(res.body);
-    // setUser(res.body);
     login(Number(res.body.user_id));
     console.log("redirect url received");
     console.log(res.redirect.redirect_url);
@@ -39,13 +36,10 @@ function NavBar() {
 
   return (
     <div className="navbar">
-      {/* Left Logo (SVG) */}
       <div className="logo-container">
         <img src={logoImageSmall} alt="Logo" />
-        {/* <span>MyApp</span> */}
       </div>
 
-      {/* Right Home Link and Button */}
       <div className="right-container">
         <a href="/" className="nav-home">
           Home
@@ -59,11 +53,8 @@ function NavBar() {
           onSubmit={sendUserInfo}
         >
           <h2> 채팅방 입장 </h2>
-          {/* <p>This modal lets you enter a search term and fetch data!</p> */}
         </Modal>
       </div>
-
-      {/* Modal Component */}
     </div>
   );
 }

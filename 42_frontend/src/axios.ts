@@ -1,16 +1,10 @@
 import axios from "axios";
-// import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-
-// const sessionId =
-//   sessionStorage.getItem("sessionid") || localStorage.getItem("sessionid");
-// const navigate = useNavigate();
 
 export const $ = axios.create({
   baseURL: "http://localhost:2424",
   headers: {
     "Content-Type": "application/json",
-    // Authorization: `Bearer ${sessionId}`,
   },
 });
 
