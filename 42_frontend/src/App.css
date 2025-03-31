@@ -26,3 +26,8 @@
   border-top: 10px solid #dfc7b8;
   overflow-y: auto;
 }
+
+@font-face {
+  font-family: "_CookieRun Regular";
+  src: url("./assets/._CookieRun Regulat.ttf");
+}
