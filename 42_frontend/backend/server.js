@@ -60,23 +60,23 @@ var data3 = {
 app.use(
   "/assets",
   express.static(
-    "C:\\Users\\alice\\OneDrive\\바탕 화면\\중요\\webserv\\42_frontend\\dist\\assets"
+    "C:\\Users\\alice\\Desktop\\webserv\\mine\\42_frontend\\dist\\assets"
+    
+    // "C:\\Users\\alice\\OneDrive\\바탕 화면\\중요\\webserv\\42_frontend\\dist\\assets"
   )
 );
 app.use(express.json());
 app.get("/", (req, res) => {
   res.sendFile(
     // "index.html"
-    "C:\\Users\\alice\\OneDrive\\바탕 화면\\중요\\webserv\\42_frontend\\dist\\index.html"
+    // "C:\\Users\\alice\\OneDrive\\바탕 화면\\중요\\webserv\\42_frontend\\dist\\index.html"
+    "C:\\Users\\alice\\Desktop\\webserv\\mine\\42_frontend\\dist\\index.html"
+
   );
-});
-app.get("/assets", (req, res) => {
-  res.sendFile();
 });
 app.delete("/api/chatroom/files/:contentId", (req, res) => {
   const contentId = req.params.contentId;
   console.log(contentId);
-  3;
 });
 app.delete("/api/chatroom/comments/:contentId", (req, res) => {
   const contentId = req.params.contentId;
@@ -203,7 +203,8 @@ app.get("/*", (req, res) => {
   console.log(req.originalUrl);
   res.sendFile(
     // "index.html"
-    "C:\\Users\\alice\\OneDrive\\바탕 화면\\중요\\webserv\\42_frontend\\dist\\index.html"
+    "C:\\Users\\alice\\Desktop\\webserv\\mine\\42_frontend\\dist\\index.html"
+    // "C:\\Users\\alice\\OneDrive\\바탕 화면\\중요\\webserv\\42_frontend\\dist\\index.html"
   );
 });
 

@@ -17,7 +17,8 @@ const MessageItem = ({ message, onDelete, onDownload }: MessageItemProps) => {
   const handleClose = () => {
     setShowOptions(false);
   };
-
+  const date = new Date(message.timestamp);
+  const formattedDate = `${date.getMonth() + 1}월 ${date.getDate()}일 ${date.getHours()}시 ${date.getMinutes()}분`;
   return (
     <>
       <li onClick={handleClick} style={{ cursor: "pointer" }}>
@@ -27,7 +28,7 @@ const MessageItem = ({ message, onDelete, onDownload }: MessageItemProps) => {
         ) : (
           <div>메시지가 삭제되었습니다.</div>
         )}
-        <small>{message.timestamp}</small>
+        <small>{formattedDate}</small>
       </li>
 
       {/* 삭제/다운로드 선택 모달 */}

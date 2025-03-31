@@ -30,6 +30,7 @@ function FileDownload() {
       link.click();
       URL.revokeObjectURL(link.href);
     } catch (error) {
+      console.log(error);
       setError("Download failed. Please try again.");
     }
     setModalOpen(false);

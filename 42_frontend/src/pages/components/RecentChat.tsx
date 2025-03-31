@@ -56,25 +56,19 @@ function RecentChats() {
       link.download = "42-chat-downloaded-file.txt";
       link.click();
       URL.revokeObjectURL(link.href);
-    } catch (error) {
+    } catch (err) 
+    {
+      console.log(err);
       return "Download failed. Please try again.";
     }
   };
+  
   // if (isLoading) return <p> Chatting Page를 불러오고 있습니다.</p>;
   return (
     <div
       className="chat-display"
       style={{ maxHeight: "400px", overflowY: "scroll" }}
     >
-      메시지가 최근메시지:
-      {recentContents.map((message) => (
-        <MessageItem
-          key={message.content_id}
-          message={message}
-          onDelete={message.is_comment ? handleDeleteComment : handleDeleteFile}
-          onDownload={message.is_comment ? undefined : handleDownloadFile}
-        />
-      ))}
       <ul>
         {deletedUsers?.map((user) => (
           <li key={user.user_id} style={{ color: "red" }}>
@@ -89,6 +83,14 @@ function RecentChats() {
           </li>
         ))}
       </ul>
+      {recentContents.map((message) => (
+        <MessageItem
+          key={message.content_id}
+          message={message}
+          onDelete={message.is_comment ? handleDeleteComment : handleDeleteFile}
+          onDownload={message.is_comment ? undefined : handleDownloadFile}
+        />
+      ))}
     </div>
   );
 }
