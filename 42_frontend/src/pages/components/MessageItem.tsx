@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Content } from "../../Content";
+import "./MessageItem.css"
 import CommentManager from "./CommentManager";
 
 type MessageItemProps = {
