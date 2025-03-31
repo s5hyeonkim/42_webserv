@@ -27,14 +27,14 @@ function OldChats() {
   // console.log("old");
   // console.log(oldContents);
   const handleDeleteFile = async (content_id: number) => {
-    await $.delete(`/api/chatrooom/files/${content_id}`)
+    await $.delete(`/api/chatroom/files/${content_id}`)
       .then(() => {})
       .catch(() => {
         return "파일 삭제에 실패하였습니다.";
       });
   };
   const handleDeleteComment = async (content_id: number) => {
-    await $.delete(`/api/chatrooom/comments/${content_id}`)
+    await $.delete(`/api/chatroom/comments/${content_id}`)
       .then(() => {})
       .catch(() => {
         return "파일 삭제에 실패하였습니다.";

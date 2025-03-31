@@ -24,14 +24,14 @@ function RecentChats() {
     // setDeletedContents,
   } = useContentStore();
   const handleDeleteFile = async (content_id: number) => {
-    await $.delete(`/api/chatrooom/files/${content_id}`)
+    await $.delete(`/api/chatroom/files/${content_id}`)
       .then(() => {})
       .catch(() => {
         return "파일 삭제에 실패하였습니다.";
       });
   };
   const handleDeleteComment = async (content_id: number) => {
-    await $.delete(`/api/chatrooom/comments/${content_id}`)
+    await $.delete(`/api/chatroom/comments/${content_id}`)
       .then(() => {})
       .catch(() => {
         return "파일 삭제에 실패하였습니다.";
@@ -56,13 +56,12 @@ function RecentChats() {
       link.download = "42-chat-downloaded-file.txt";
       link.click();
       URL.revokeObjectURL(link.href);
-    } catch (err) 
-    {
+    } catch (err) {
       console.log(err);
       return "Download failed. Please try again.";
     }
   };
-  
+
   // if (isLoading) return <p> Chatting Page를 불러오고 있습니다.</p>;
   return (
     <div

@@ -14,6 +14,7 @@ export function ChatDisplay() {
     queryFn: getChattingList,
     staleTime: 1000,
     refetchOnMount: true,
+    // refetchInterval: 1000,
   });
   const { users, setUsers, setNewUsers, setDeletedUsers } = useUserStore();
   const { setContents, setOldContents, setRecentContents } = useContentStore();
@@ -23,10 +24,10 @@ export function ChatDisplay() {
   const classifyComments = (contents: Content[]) => {
     const now = new Date();
     const recentComments = contents.filter(
-      (content) => now.getTime() - content.timestamp <= 1000 * 60 * 5
+      (content) => now.getTime() - Number(content.timestamp) <= 1000 * 60 * 5
     );
     const oldComments = contents.filter(
-      (content) => now.getTime() - content.timestamp > 1000 * 60 * 5
+      (content) => now.getTime() - Number(content.timestamp) > 1000 * 60 * 5
     );
     return { recentComments, oldComments };
   };

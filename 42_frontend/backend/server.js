@@ -19,13 +19,22 @@ var data = {
   ],
   contents: [
     {
-      user_id: "2",
-      user_name: "a",
+      user_id: "3",
+      user_name: "abcbc",
       content_id: "11",
       content: "this is comment",
       is_comment: 1,
       is_exist: 1,
-      timestamp: "1231325",
+      timestamp: 1743393564144,
+    },
+    {
+      user_id: "2",
+      user_name: "qweqwe",
+      content_id: "11",
+      content: "this is comment",
+      is_comment: 1,
+      is_exist: 1,
+      timestamp: 1743393564344,
     },
   ],
 };
@@ -33,10 +42,10 @@ var data2 = {
   user_id: 1,
   user_name: "aa",
   content_id: 11,
-  conetnt: "",
+  content: "",
   is_exist: true,
   is_comment: false,
-  timestampe: 1231231222,
+  timestamp: 1231231222,
 };
 var data3 = {
   filelist: [
@@ -60,18 +69,16 @@ var data3 = {
 app.use(
   "/assets",
   express.static(
-    "C:\\Users\\alice\\Desktop\\webserv\\mine\\42_frontend\\dist\\assets"
-    
-    // "C:\\Users\\alice\\OneDrive\\바탕 화면\\중요\\webserv\\42_frontend\\dist\\assets"
+    // "C:\\Users\\alice\\Desktop\\webserv\\mine\\42_frontend\\dist\\assets"
+    "C:\\Users\\alice\\OneDrive\\바탕 화면\\중요\\webserv\\42_frontend\\dist\\assets"
   )
 );
 app.use(express.json());
 app.get("/", (req, res) => {
   res.sendFile(
     // "index.html"
-    // "C:\\Users\\alice\\OneDrive\\바탕 화면\\중요\\webserv\\42_frontend\\dist\\index.html"
-    "C:\\Users\\alice\\Desktop\\webserv\\mine\\42_frontend\\dist\\index.html"
-
+    "C:\\Users\\alice\\OneDrive\\바탕 화면\\중요\\webserv\\42_frontend\\dist\\index.html"
+    // "C:\\Users\\alice\\Desktop\\webserv\\mine\\42_frontend\\dist\\index.html"
   );
 });
 app.delete("/api/chatroom/files/:contentId", (req, res) => {
@@ -176,7 +183,7 @@ app.get("/api/chatroom/files/download/:contentId", (req, res) => {
   // Check if file exists
   fs.stat(file_path, (err, stats) => {
     if (err || !stats.isFile()) {
-      return res
+      return res0
         .status(500)
         .json({ error: "File does not exist on the server" });
     }
@@ -203,8 +210,8 @@ app.get("/*", (req, res) => {
   console.log(req.originalUrl);
   res.sendFile(
     // "index.html"
-    "C:\\Users\\alice\\Desktop\\webserv\\mine\\42_frontend\\dist\\index.html"
-    // "C:\\Users\\alice\\OneDrive\\바탕 화면\\중요\\webserv\\42_frontend\\dist\\index.html"
+    // "C:\\Users\\alice\\Desktop\\webserv\\mine\\42_frontend\\dist\\index.html"
+    "C:\\Users\\alice\\OneDrive\\바탕 화면\\중요\\webserv\\42_frontend\\dist\\index.html"
   );
 });
 

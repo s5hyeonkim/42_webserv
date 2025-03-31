@@ -31,12 +31,14 @@ $.interceptors.response.use(
         window.location.href = `http://localhost:2424/main`;
       });
     } else if (
-      error.response.data.redirec &&
+      error.response.data.redirect &&
       error.response.data.redirect.redirect_url
     ) {
       window.location.href = `http://localhost:2424${error.response.data.redirect.redirect_url}`;
       // navigate(error.response.data.redirect.redirect_url, { replace: true });
-    }
+    } else if (error.response.dat4a.redirect_url)
+      window.location.href = `http://localhost:2424${error.response.data.redirect_url}`;
+
     return Promise.reject(error);
   }
 );

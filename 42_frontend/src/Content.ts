@@ -8,7 +8,7 @@ export interface Content {
   content: string;
   is_exist: boolean;
   is_comment: boolean;
-  timestamp: number;
+  timestamp: string;
 }
 
 export interface ContentStore {

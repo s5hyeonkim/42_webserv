@@ -19,8 +19,11 @@ const MessageItem = ({ message, onDelete, onDownload }: MessageItemProps) => {
   };
   const date = new Date(message.timestamp);
   console.log("Date");
+  console.log(message.timestamp);
   console.log(date);
-  const formattedDate = `${date.getMonth() + 1}월 ${date.getDate()}일 ${date.getHours()}시 ${date.getMinutes()}분`;
+  const formattedDate = `${
+    date.getMonth() + 1
+  }월 ${date.getDate()}일 ${date.getHours()}시 ${date.getMinutes()}분`;
   return (
     <>
       <li onClick={handleClick} style={{ cursor: "pointer" }}>
