@@ -18,6 +18,8 @@ const MessageItem = ({ message, onDelete, onDownload }: MessageItemProps) => {
     setShowOptions(false);
   };
   const date = new Date(message.timestamp);
+  console.log("Date");
+  console.log(date);
   const formattedDate = `${date.getMonth() + 1}월 ${date.getDate()}일 ${date.getHours()}시 ${date.getMinutes()}분`;
   return (
     <>
@@ -30,8 +32,6 @@ const MessageItem = ({ message, onDelete, onDownload }: MessageItemProps) => {
         )}
         <small>{formattedDate}</small>
       </li>
-
-      {/* 삭제/다운로드 선택 모달 */}
       {showOptions && (
         <div
           style={{
