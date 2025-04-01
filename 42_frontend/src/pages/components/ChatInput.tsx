@@ -8,7 +8,7 @@
 //   const [text, setText] = useState("");
 //     const [file, setFile] = useState<File | null>(null);
 //     const [error, setError] = useState<string | null>(null);
-  
+
 //   const { addContent } = useContentStore();
 //   const userId = getUserId();
 
@@ -56,7 +56,7 @@
 //         .catch(() => setError("file upload failed. try again"));
 //       return response;
 //     };
-  
+
 //   const sendComment = async () => {
 //     const response = await $.post(`/api/chatroom/comments`, {
 //       user_id: userId?.toString(),

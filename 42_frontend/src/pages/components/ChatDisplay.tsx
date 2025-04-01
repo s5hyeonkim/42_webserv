@@ -14,8 +14,8 @@ export function ChatDisplay() {
     queryKey: ["chatting"],
     queryFn: getChattingList,
     staleTime: 1000,
-    // refetchOnMount: true,
-    refetchInterval: 1000,
+    refetchOnMount: true,
+    // refetchInterval: 1000,
   });
   // const { users, setUsers, setNewUsers, setDeletedUsers } = useUserStore();
   const { users, setUsers } = useUserStore();

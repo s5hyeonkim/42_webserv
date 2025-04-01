@@ -16,12 +16,14 @@ const convertTimestampToDate = (timestamp: number): string => {
 
 export default function DirectoryPage() {
   const [content, setContent] = useState<Directory[] | []>([]);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const location = useLocation();
 
   const fetchDirectoryData = async (addr: string): Promise<Directory[]> => {
     console.log("request to server to ");
     console.log(addr);
+    setLoading(true);
     const response = await $.get(addr)
       .then((res) => res.data)
       .catch((err) => {
@@ -30,6 +32,7 @@ export default function DirectoryPage() {
         console.log(err);
         setError(err.response.data.Error);
       });
+    setLoading(false);
     console.log("response");
     console.log(response);
     console.log(response.filelist);
@@ -43,7 +46,7 @@ export default function DirectoryPage() {
       setContent(data);
     });
   }, [location]);
-  if (!content) return <div> Loading</div>;
+  if (loading) return <div> Loading</div>;
 
   return (
     <Fragment>

@@ -6,9 +6,11 @@ import {
 } from "react-router-dom";
 import MainPage from "../pages/MainPage.tsx";
 import ChatPage from "../pages/ChatPage.tsx";
-import NotFoundPage from "../pages/NotFoundPage.tsx";
 import App from "../App.tsx";
 import DirectoryPage from "../pages/DirectoryPage.tsx";
+import ClientErrorPage from "../pages/ClientErrorPage.tsx";
+import ServerErrorPage from "../pages/ServerErrorPage.tsx";
+import ErrorPage from "../pages/ErrorPage.tsx";
 
 const ErrorBoundary = () => {
   const error = useRouteError();
@@ -48,8 +50,16 @@ const router = createBrowserRouter([
         ],
       },
       {
+        path: "/40x.html",
+        element: <ClientErrorPage />,
+      },
+      {
+        path: "/50x.html",
+        element: <ServerErrorPage />,
+      },
+      {
         path: "*",
-        element: <NotFoundPage />,
+        element: <ErrorPage />,
       },
     ],
   },

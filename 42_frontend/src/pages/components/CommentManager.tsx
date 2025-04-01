@@ -24,7 +24,7 @@ const CommentManager = ({
         transform: "translate(-50%, -50%)",
         background: "white",
         padding: "10px",
-        borderRadius: "10px",
+        borderRadius: "10p1x",
         boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
         zIndex: 1000,
       }}

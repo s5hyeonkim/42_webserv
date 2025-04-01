@@ -22,7 +22,7 @@ import "./toast.css";
 // `;
 
 const defaultToastOption: ToastOptions = {
-  position: 'top-right',
+  position: "top-right",
   autoClose: 4000,
   hideProgressBar: true,
   closeOnClick: true,
