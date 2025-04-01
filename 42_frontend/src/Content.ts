@@ -2,7 +2,7 @@
 import { create } from "zustand";
 
 export interface Content {
-  user_id: string;
+  user_id: number;
   content_id: number;
   user_name: number;
   content: string;
@@ -37,8 +37,10 @@ export const useContentStore = create<ContentStore>((set) => ({
   setRecentContents: (contents) => set({ recentContents: contents }),
   displayedContents: [],
   addDisplayedContent: (content) =>
-    set((state) => ({ displayedContents: [...state.displayedContents, content] })),
-  setDisplayedContents: (contents) => set({displayedContents: contents}),
+    set((state) => ({
+      displayedContents: [...state.displayedContents, content],
+    })),
+  setDisplayedContents: (contents) => set({ displayedContents: contents }),
   // deletedContents: [],
   // setDeletedContents: (contents) => set({ deletedContents: contents }),
 }));

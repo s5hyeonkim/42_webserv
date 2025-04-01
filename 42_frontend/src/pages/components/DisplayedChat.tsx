@@ -1,6 +1,7 @@
 import useContentStore, { Content } from "../../Content.ts";
 import MessageItem from "./MessageItem.tsx";
 import { $ } from "../../axios.ts";
+import { getUserId } from "../../Auth.tsx";
 // import { useState } from "react";
 
 function DisplayedChat() {
@@ -10,22 +11,23 @@ function DisplayedChat() {
     // addContent,
     // setOldContents,
     // recentContents,
-    displayedContents
+    displayedContents,
     // setRecentContents,
     // deletedContents,
     // setDeletedContents,
   } = useContentStore();
   const now = new Date();
-  const handleFurther = (timestamp: number) => {
-    return now.getTime() - timestamp < 1000 * 60 * 5;
-  }
+  const myId = getUserId();
+  const handleFurther = (message: Content) => {
+    if (message.user_id == myId)
+      return now.getTime() - message.timestamp < 1000 * 60 * 5;
+    return false;
+  };
   const handleDelete = (message: Content) => {
-    if (message.is_comment)
-        handleDeleteComment(message.content_id);
-    else
-        handleDeleteFile(message.content_id);
+    if (message.is_comment) handleDeleteComment(message.content_id);
+    else handleDeleteFile(message.content_id);
     return true;
-}
+  };
   const handleDeleteFile = async (content_id: number) => {
     await $.delete(`/api/chatroom/files/${content_id}`)
       .then(() => {})
@@ -71,7 +73,6 @@ function DisplayedChat() {
       className="chat-display"
       // style={{ maxHeight: "400px", overflowY: "scroll" }}
     >
-
       {/* {recentContents.map((message) => ( */}
       {displayedContents.map((message) => (
         <MessageItem
@@ -79,7 +80,7 @@ function DisplayedChat() {
           message={message}
           onDelete={handleDelete}
           onDownload={message.is_comment ? undefined : handleDownloadFile}
-          onFurther = {handleFurther(message.timestamp)}
+          onFurther={handleFurther(message)}
         />
       ))}
     </div>

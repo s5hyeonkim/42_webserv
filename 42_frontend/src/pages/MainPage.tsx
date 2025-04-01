@@ -43,8 +43,8 @@ const MainPage = () => {
             </div>
           ))}
         </div>
+        <BottomNavBar />
       </div>
-      <BottomNavBar />
     </Fragment>
   );
 };
