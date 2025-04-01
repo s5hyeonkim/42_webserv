@@ -2,30 +2,25 @@
   width: 100%;
   position: fixed;
 } */
-
+/* 
 .app {
   display: flex;
   flex-direction: column;
-  /* width: 100vw; */
-  /* gap: 20px; */
-  /* height: 100vh; */
-}
-
+} */
+/* 
 .main-container {
   flex-grow: 1;
   overflow-y: auto;
-}
+} */
 
-.btn-navbar {
-  padding: 10px 20px; /* Some padding around the navbar */
-  width: 100%; /* Ensure the navbar takes up the full width of the screen */
-  /* position: relative; */
+/* .btn-navbar {
+  padding: 10px 20px;
+  width: 100%;
   position: fixed;
-  background-color: white; /* Your preferred background color */
-  /* color: white; Text color for navbar */
+  background-color: white;
   border-top: 10px solid #dfc7b8;
   overflow-y: auto;
-}
+} */
 
 @font-face {
   font-family: "CookieRun Regular";
