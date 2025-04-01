@@ -21,7 +21,10 @@ function Modal({
     const error = await onSubmit(query);
     if (error != null) {
       setErrorMessage(error);
-    } else onClose();
+    } else {
+      setLoading(false);
+      onClose();
+    }
     setLoading(false);
   };
 
