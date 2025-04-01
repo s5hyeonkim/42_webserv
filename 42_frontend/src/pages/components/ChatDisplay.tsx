@@ -14,17 +14,17 @@ export function ChatDisplay() {
     queryKey: ["chatting"],
     queryFn: getChattingList,
     staleTime: 1000,
-    // refetchOnMount: true,
-    refetchInterval: 1000,
+    refetchOnMount: true,
+    // refetchInterval: 1000,
   });
   // const { users, setUsers, setNewUsers, setDeletedUsers } = useUserStore();
-  const {users, setUsers} = useUserStore();
+  const { users, setUsers } = useUserStore();
   // const { contents, setContents, setOldContents, setRecentContents } = useContentStore();
   const { setContents, setDisplayedContents } = useContentStore();
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
-  const itemsPerPage = 20;
-  
+  const itemsPerPage = 12;
+
   const scrollRef = useRef<HTMLDivElement | null>(null);
   console.log("chat data received");
   console.log(data);
@@ -54,7 +54,7 @@ export function ChatDisplay() {
     if (scrollTop + clientHeight >= scrollHeight - 10 && !loading) {
       // 스크롤이 맨 아래에 가까워지면 페이지 증가
       setLoading(true);
-      setPage(prevPage => prevPage + 1);
+      setPage((prevPage) => prevPage + 1);
       setLoading(false);
     }
   };
@@ -63,12 +63,11 @@ export function ChatDisplay() {
     const currentData: Content[] = data?.contents ?? [];
     // const { recentComments, oldComments } = classifyComments(currentData);
 
-
     const newContents = currentData.slice(0, page * itemsPerPage);
     setDisplayedContents(newContents);
     setUsers(currentUsers);
     const { addedUsers, deletedUsers } = classifyUsers(currentUsers);
-    deletedUsers?.forEach((user : User) => {
+    deletedUsers?.forEach((user: User) => {
       Toast.info(`${user.user_name}님이 삭제되었습니다.`, {});
     });
 
@@ -102,12 +101,8 @@ export function ChatDisplay() {
   }
 
   return (
-    <div
-    className="chat-container"
-      ref={scrollRef}
-      onScroll={handleScroll}
-    >
-        {/* <OldChats /> */}
+    <div className="chat-container" ref={scrollRef} onScroll={handleScroll}>
+      {/* <OldChats /> */}
       {/* <RecentChats /> */}
       <DisplayedChat />
     </div>
