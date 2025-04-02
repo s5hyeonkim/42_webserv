@@ -41,7 +41,7 @@ function NavBar() {
       </div>
 
       <div className="right-container">
-        <a href="/" className="nav-home">
+        <a href="/main" className="nav-home">
           Home
         </a>
         <button onClick={toggleModal} className="nav-chat-btn">
