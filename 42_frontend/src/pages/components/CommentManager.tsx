@@ -38,7 +38,7 @@ const CommentManager = ({
           }}
           style={{
             position: "fixed",
-            left: "35px",
+            left: "15px",
             bottom: "16px",
             // marginLeft: "10px",
             background: "green",
@@ -63,7 +63,7 @@ const CommentManager = ({
         style={{
           padding: "5px 10px",
           position: "fixed",
-          left: "55px",
+          left: "65px",
           bottom: "16px",
           // marginLeft: "10px",
           cursor: "pointer",
@@ -80,7 +80,7 @@ const CommentManager = ({
         style={{
           // marginRight: "10px",
           position: "fixed",
-          left: "75px",
+          left: "100px",
           bottom: "16px",
           padding: "5px 10px",
           cursor: "pointer",
